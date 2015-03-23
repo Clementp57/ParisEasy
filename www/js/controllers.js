@@ -39,7 +39,19 @@ angular.module('parisEasy.controllers', [])
 
 }])
 
-.controller('ResultsCtrl', ['$scope','ParisApi',
-	function($scope, ParisApi) {
-		console.info('Results');
+.controller('ResultsCtrl', ['$scope','ParisApi', '$stateParams',
+	function($scope, ParisApi, $stateParams) {	
+
+		var self = this;
+		self.cat_id = 2;
+
+		self.getResults = function(id) {
+			ParisApi.getEquipements(id).then(function (response) {
+	            console.log(response.data);
+	            self.categories = response.data;
+	        });
+		}
+
+		
+
 }]);

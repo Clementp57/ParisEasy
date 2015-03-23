@@ -54,32 +54,10 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
       views: {
         'tab-results': {
           templateUrl: 'templates/tab-results.html',
-          controller: 'ResultsCtrl'
+          controller: 'ResultsCtrl as results'
         }
       }
     })
-
-
-  //   .state('tab.chat-detail', {
-  //     url: '/chats/:chatId',
-  //     views: {
-  //       'tab-chats': {
-  //         templateUrl: 'templates/chat-detail.html',
-  //         controller: 'ChatDetailCtrl'
-  //       }
-  //     }
-  //   })
-
-  // .state('tab.account', {
-  //   url: '/account',
-  //   views: {
-  //     'tab-account': {
-  //       templateUrl: 'templates/tab-account.html',
-  //       controller: 'AccountCtrl'
-  //     }
-  //   }
-
- // });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/home');

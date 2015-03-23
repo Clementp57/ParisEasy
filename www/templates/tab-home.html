@@ -16,13 +16,11 @@
        Make it easy!
     </button>
 
-    <a href="#/tab/results">.col.col-75</a>
-
     <!-- Themes list -->
     <div ng-repeat="cat in ctrl.categories">
         <div class="row" ng-if="$even">
-            <div class="col col-50">{{ctrl.categories[$index].name}}</div>
-            <div class="col col-50">{{ctrl.categories[$index + 1].name}}</div>
+            <div class="button col col-50" ng-click="ctrl.results(1)">{{ctrl.categories[$index].name}}</div>
+            <div class="button col col-50" ng-click="ctrl.results(1)">{{ctrl.categories[$index + 1].name}}</div>
         </div>
     </div>
 
