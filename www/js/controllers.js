@@ -1,34 +1,41 @@
 angular.module('parisEasy.controllers', [])
 
+
 .controller('HomeCtrl', ['$scope','$cordovaGeolocation', '$ionicPlatform','ParisApi', '$state',
 	function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $state) {
+   
+            var self = this;
 
-	$scope.getLocation = function(){
+            self.getLocation = function () {
 
-		console.info('Getting location...');
+                console.info('Getting location...');
 
-		$ionicPlatform.ready(function() {
-			var posOptions = {timeout: 10000, enableHighAccuracy: false};
-			  $cordovaGeolocation
-			    .getCurrentPosition(posOptions)
-			    .then(function (position) {
-			      var lat  = position.coords.latitude;
-			      var long = position.coords.longitude;
-			      console.info(lat +" "+ long);
-			    }, function(err) {
-			      console.info(err);
-			  	});
-		});
-	};
+                $ionicPlatform.ready(function () {
+                    var posOptions = {
+                        timeout: 10000,
+                        enableHighAccuracy: false
+                    };
+                    $cordovaGeolocation
+                        .getCurrentPosition(posOptions)
+                        .then(function (position) {
+                            var lat = position.coords.latitude;
+                            var long = position.coords.longitude;
+                            console.info(lat + " " + long);
+                        }, function (err) {
+                            console.info(err);
+                        });
+                });
+            };
 
-	$scope.results = function (id) {
+	self.results = function (id) {
 		console.info("Go results");
         $state.go('tab.results', {id: id});
     }
 
-	ParisApi.getCategories().then(function(datas) {
-        console.log(datas); 
-    });
+	ParisApi.getCategories().then(function (response) {
+            console.log(response.data);
+            self.categories = response.data;
+        });
 
 }])
 
@@ -36,5 +43,3 @@ angular.module('parisEasy.controllers', [])
 	function($scope, ParisApi) {
 		console.info('Results');
 }]);
-
-
