@@ -1,6 +1,5 @@
 angular.module('parisEasy.controllers', [])
 
-<<<<<<< HEAD
 .controller('HomeCtrl', function($scope, $cordovaGeolocation, $ionicPlatform) {
 
 	$scope.getLocation = function(){
