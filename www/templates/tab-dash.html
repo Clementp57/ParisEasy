@@ -1,28 +1,35 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Accueil">
   <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-divider">ParisEasy is easy</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
-      </div>
+
+    <!-- Main form -->
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Thème">
+      </label>
+      <label class="item item-input">
+        <i class="icon ion-location placeholder-icon"></i>
+        <input type="text" placeholder="Autour de moi">
+      </label>
     </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
+    <button class="button button-block button-light">
+       Make it easy!
+    </button>
+
+    <!-- Themes list -->
+    <div class="row">
+      <div class="button col col-75">.col.col-75</div>
+      <div class="button col">.col</div>
     </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
-      </div>
+
+    <div class="row">
+      <div class="button col">.col</div>
+      <div class="button col col-75">.col.col-75</div>
+    </div>
+
+    <div class="row">
+      <div class="button col">.col</div>
+      <div class="button col">.col</div>
     </div>
   </ion-content>
 </ion-view>
