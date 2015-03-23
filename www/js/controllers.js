@@ -1,5 +1,7 @@
 angular.module('parisEasy.controllers', [])
-.controller('HomeCtrl', ['$scope','ParisApi',function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi) {
+
+.controller('HomeCtrl', ['$scope','$cordovaGeolocation', '$ionicPlatform','ParisApi', '$state',
+	function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $state) {
 
 	$scope.getLocation = function(){
 
@@ -19,8 +21,20 @@ angular.module('parisEasy.controllers', [])
 		});
 	};
 
+	$scope.results = function (id) {
+		console.info("Go results");
+        $state.go('tab.results', {id: id});
+    }
+
 	ParisApi.getCategories().then(function(datas) {
         console.log(datas); 
     });
 
+}])
+
+.controller('ResultsCtrl', ['$scope','ParisApi',
+	function($scope, ParisApi) {
+		console.info('Results');
 }]);
+
+
