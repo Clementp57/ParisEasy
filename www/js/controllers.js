@@ -1,12 +1,7 @@
-angular.module('starter.controllers', [])
+angular.module('parisEasy.controllers', [])
 
-.controller('DashCtrl', function ($scope) {})
-
-.controller('ChatsCtrl', function ($scope, Chats) {
-$scope.chats = Chats.all();
-$scope.remove = function (chat) {
-    Chats.remove(chat);
-}
-});
-
-});
+.controller('HomeCtrl',['$scope','ParisApi', function($scope, ParisApi) {
+    ParisApi.getCategories().then(function(datas) {
+        console.log(datas); 
+    });
+}]);

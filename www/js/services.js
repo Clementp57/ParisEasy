@@ -1,15 +1,15 @@
-angular.module('starter.services', [])
+angular.module('parisEasy.services', [])
 
-.factory('ParisApi', function () {
+.factory('ParisApi',['$q','$http', function ($q, $http) {
     var token = "f624edf37a3ba2b5c1db2b231f273942a732be06b983b955d8c94147750e4451";
-    var baseUrl = "https://api.paris.fr/api/data/1.0/";
+    var baseUrl = "http://api.paris.fr/api/data/1.0/";
     
     return {
         getCategories: function () {
             var d = $q.defer();
 			var start = new Date().getTime(); //performance analyse
 
-			var result = $http.get(baseUrl+"Equipements/get_categories/?token="+token).$promise.then(
+			var result = $http.get(baseUrl+"Equipements/get_categories/?token="+token).then(
 				function(data) {
 					d.resolve(result);
 					console.log('time taken for request: ' + (new Date().getTime() - start) + 'ms'); //debug
@@ -32,7 +32,7 @@ angular.module('starter.services', [])
 //            return null;
         }
     };
-})
+}])
 
 .factory('Chats', function () {
     // Might use a resource here that returns a JSON array
