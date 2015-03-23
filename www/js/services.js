@@ -27,8 +27,8 @@ angular.module('parisEasy.services', [])
             
             var url = baserUrl+"Equipements/get_equipements/?token="+token;
             url+= "&cid="+catId;
-            url+= "&offset="offset;
-            url+= "&limit="limit;
+            url+= "&offset="+offset;
+            url+= "&limit="+limit;
 
             var result = $http.get(url).then(
                 function (response) {
