@@ -1,5 +1,6 @@
 angular.module('parisEasy.controllers', [])
 
+<<<<<<< HEAD
 .controller('HomeCtrl', function($scope, $cordovaGeolocation, $ionicPlatform) {
 
 	$scope.getLocation = function(){
@@ -19,6 +20,10 @@ angular.module('parisEasy.controllers', [])
 			  	});
 		});
 	}
+
+	ParisApi.getCategories().then(function(datas) {
+        console.log(datas); 
+    });
 
 });
 
