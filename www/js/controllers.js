@@ -1,6 +1,6 @@
 angular.module('parisEasy.controllers', [])
 
-.controller('HomeCtrl', function($scope, $cordovaGeolocation, $ionicPlatform) {
+.controller('HomeCtrl', ['$scope','ParisApi',function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi) {
 
 	$scope.getLocation = function(){
 
@@ -18,13 +18,13 @@ angular.module('parisEasy.controllers', [])
 			      console.info(err);
 			  	});
 		});
-	}
+	};
 
 	ParisApi.getCategories().then(function(datas) {
         console.log(datas); 
     });
 
-});
+}]);
 
 // .controller('ChatsCtrl', function($scope, Chats) {
 //   $scope.chats = Chats.all();
