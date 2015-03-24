@@ -38,8 +38,10 @@ angular.module('parisEasy.controllers', [])
 	function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $stateParams) {
 
 		var self = this;
-		self.results = {};
+		$scope.limit=10;
+		$scope.offset=0;
 		$scope.url = "http://filer.paris.fr/";
+		self.results = new Array();
 		$scope.cat_id = $stateParams.cat_id;
 		//$scope.content.title = $stateParams.cat_name;
 
@@ -58,9 +60,26 @@ angular.module('parisEasy.controllers', [])
 			});
         });
 
-        // var loadData = function(offset, limit) {
+        $scope.loadData = function() {
 
-        // }
+        	$scope.limit+=10;
+        	$scope.offset+=10
+
+        	console.log("loading data" +  " " +  $scope.offset + " -> " + $scope.limit);
+
+        	ParisApi.getActivities($scope.cat_id, '', '', '', '', $scope.offset, $scope.limit).then(function (response) {
+	            
+        		angular.forEach(self.results, function(value, key) {
+        			 self.results.push(response.data[key]);
+        		});
+        		
+	           	$scope.$broadcast('scroll.infiniteScrollComplete');
+	            console.log(self.results);
+            });
+            
+        };
+
+
 	    
 
 	    //loadData(10);
