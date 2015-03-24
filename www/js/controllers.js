@@ -38,14 +38,32 @@ angular.module('parisEasy.controllers', [])
 	function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $stateParams) {
 
 		var self = this;
+		self.results = {};
 		$scope.url = "http://filer.paris.fr/";
 		$scope.cat_id = $stateParams.cat_id;
+		//$scope.content.title = $stateParams.cat_name;
 
-		ParisApi.getActivities($scope.cat_id, '', '', '', '', 0, 20).then(function (response) {
+		ParisApi.getActivities($scope.cat_id, '', '', '', '', 0, 10).then(function (response) {
             console.log(response);
             self.results = response.data;
+
+            // Map
+            L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
+			var map = L.mapbox.map('map')
+			    .setView([48.855584, 2.354613], 11)
+			    .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
+
+			angular.forEach(self.results, function(value, key) {
+			  L.marker([self.results[key].lat, self.results[key].lon]).addTo(map);
+			});
         });
-		
-		
+
+        // var loadData = function(offset, limit) {
+
+        // }
+	    
+
+	    //loadData(10);
+
 
 }]);
