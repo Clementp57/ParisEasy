@@ -61,11 +61,15 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         }
     })
 
-  .state('result', {
-      url: '/result/:id',
-      templateUrl: 'templates/result.html',
-      controller: 'ResultCtrl as ctrl'
-  })
+     .state('main.result', {
+        url: '/result/:id',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/result.html',
+                controller: 'ResultCtrl as ctrl'
+            }
+        }
+    })
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('main/home');

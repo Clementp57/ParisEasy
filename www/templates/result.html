@@ -10,18 +10,23 @@
     <div class="item item-divider">
       <span ng-bind-html="result.nom"></span>
     </div>
+    <p class="item"><i class="icon ion-location"></i> <span  ng-bind-html="result.adresse"> </span></p>
     <p class="item" ng-bind-html="result.small_description"></p>
+    
 
     <!-- <figure>
       <img ng-src="{{ result.media[0].path }}" alt="{{ result.media[0].credit }}">
     </figure> -->
 
     <div class="item item-divider">
-      Photos instagram à proximité du lieu
+      <i class="icon ion-camera"></i> Photos instagram à proximité du lieu
     </div>
-    <ul class="ig">
-      <li ng-repeat="ig in pics" ><img ng-src="{{ ig.images.low_resolution.url }}"></li>
-    </ul>
+   
+    <ion-scroll direction="x"  >
+      <ul class="ig">
+         <li ng-repeat="ig in pics" ><img ng-src="{{ ig.images.low_resolution.url }}"></li>
+      </ul>
+    </ion-scroll>
 
     <!-- <p ng-bind-html="result.description"></p> -->
 
