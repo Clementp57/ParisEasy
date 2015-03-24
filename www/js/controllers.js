@@ -38,9 +38,10 @@ angular.module('parisEasy.controllers', [])
 	function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $stateParams) {
 
 		var self = this;
+		$scope.url = "http://filer.paris.fr/";
 		$scope.cat_id = $stateParams.cat_id;
 
-		ParisApi.getActivities($scope.cat_id).then(function (response) {
+		ParisApi.getActivities($scope.cat_id, '', '', '', '', 0, 20).then(function (response) {
             console.log(response);
             self.results = response.data;
         });
