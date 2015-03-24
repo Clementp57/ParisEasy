@@ -36,6 +36,12 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
       controller: 'ResultsCtrl as ctrl'
   })
 
+  .state('result', {
+      url: '/result/:id',
+      templateUrl: 'templates/result.html',
+      controller: 'ResultCtrl as ctrl'
+  })
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/home');
 
