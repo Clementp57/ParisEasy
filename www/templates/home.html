@@ -1,30 +1,35 @@
- <ion-view view-title="Accueil" left-buttons="leftButtons">
-  <ion-content class="padding" has-header="true">
+<ion-view view-title="Accueil" left-buttons="leftButtons">
+    <ion-content class="padding" has-header="true">
 
-    <!-- Main form -->
-    <div class="list list-inset">
-      <label class="item item-input">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Thème">
-      </label>
-      <label class="item item-input">
-        <i class="icon ion-location placeholder-icon"></i>
-        <input type="text" placeholder="Autour de moi">
-      </label>
-    </div>
-    <button ng-click="getLocation()" class="button button-block button-light">
-       Make it easy!
-    </button>
-
-    <!-- Themes list -->
-    <div ng-repeat="cat in ctrl.categories">
-        <div class="row" ng-if="$even">
-            <div class="button col col-50" ui-sref="results({cat_id: ctrl.categories[$index].id, cat_name: ctrl.categories[$index].name})">{{ctrl.categories[$index].name}}</div>
-            <div class="button col col-50" ui-sref="results({cat_id: ctrl.categories[$index+1].id, cat_name: ctrl.categories[$index+1].name})">{{ctrl.categories[$index + 1].name}}</div>
+        <!-- Main form -->
+        <div class="list list-inset">
+            <label class="item item-input">
+                <i class="icon ion-pound placeholder-icon"></i>
+                <input type="text" placeholder="Catégorie">
+            </label>
+            <label class="item item-input">
+                <i class="icon ion-map placeholder-icon"></i>
+                <input type="text" placeholder="Lieu, Adresse" ng-model="ctrl.currentLocation">
+            </label>
         </div>
-    </div>
+        <div class="row">
+            <div class="col col-50">
+                <button ng-click="ctrl.getLocation()" class="button button-energized button-block">
+                    <i class="icon ion-android-locate"></i> Localiser
+                </button>
+            </div>
+            <div class="col col-50">
+                <button class="button button-positive button-block">
+                    <i class="icon ion-search"></i> Rechercher
+                </button>
+            </div>
+        </div>
 
+        <ul class="list">
+            <li class="item" ng-repeat="cat in ctrl.categories" ng-click="$state.go('main.results',{cat_id: cat.id, cat_name: cat.name} )">
+                {{ cat.name }}
+            </li>
+        </ul>
 
-  </ion-content>
+    </ion-content>
 </ion-view>
-

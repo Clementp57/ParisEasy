@@ -1,6 +1,6 @@
 angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.services', 'ngCordova'])
 
-.run(function ($ionicPlatform) {
+.run(function ($ionicPlatform, $rootScope, $state, $ionicLoading) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -12,6 +12,17 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             StatusBar.styleDefault();
         }
     });
+    
+    $rootScope.$state = $state;
+  
+    $rootScope.$on('loading:show', function() {
+      $ionicLoading.show({template: 'Loading...'})
+    })
+
+    $rootScope.$on('loading:hide', function() {
+      $ionicLoading.hide()
+    })
+    
 })
 
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -24,7 +35,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
 
     .state('main', {
         url: '/main',
-        templateUrl: 'templates/main.html',
+        templateUrl: 'templates/sidemenu.html',
         abstract: true,
         controller: 'MainCtrl'
     })
@@ -53,4 +64,19 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('main/home');
 
+})
+
+.config(function($httpProvider) {
+  $httpProvider.interceptors.push(function($rootScope) {
+    return {
+      request: function(config) {
+        $rootScope.$broadcast('loading:show')
+        return config
+      },
+      response: function(response) {
+        $rootScope.$broadcast('loading:hide')
+        return response
+      }
+    }
+  })
 });
