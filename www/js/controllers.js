@@ -47,4 +47,14 @@ angular.module('parisEasy.controllers', [])
 		
 		
 
+}])
+
+.controller('RootCtrl', ['$scope', '$ionicSideMenuDelegate',
+	function($scope, $ionicSideMenuDelegate ) {
+		$scope.toggleLeft = function() {
+            console.info('toggle menu');
+            console.log($ionicSideMenuDelegate);
+            $ionicSideMenuDelegate.toggleLeft();
+        };
+
 }]);
