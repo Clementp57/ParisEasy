@@ -19,8 +19,8 @@
     <!-- Themes list -->
     <div ng-repeat="cat in ctrl.categories">
         <div class="row" ng-if="$even">
-            <div class="button col col-50" ng-click="ctrl.results(1)">{{ctrl.categories[$index].name}}</div>
-            <div class="button col col-50" ng-click="ctrl.results(1)">{{ctrl.categories[$index + 1].name}}</div>
+            <div class="button col col-50" ui-sref="results({cat_id: ctrl.categories[$index].id})">{{ctrl.categories[$index].name}}</div>
+            <div class="button col col-50" ui-sref="results({cat_id: ctrl.categories[$index+1].id})">{{ctrl.categories[$index + 1].name}}</div>
         </div>
     </div>
 

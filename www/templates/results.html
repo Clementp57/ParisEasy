@@ -1,0 +1,15 @@
+<ion-view view-title="Resultats" >
+  <ion-content>
+      <div class="list">
+
+          <a ng-repeat="res in ctrl.results" class="item item-thumbnail-left" href="#">
+            <img src="cover.jpg">
+            <h2>{{res[$index].nom}}</h2>
+            <p>{{res[$index].small_description}}</p>
+          </a>
+
+      </div>
+  </ion-content>
+</ion-view>
+
+
