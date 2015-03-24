@@ -5,56 +5,62 @@ angular.module('parisEasy.controllers', [])
    function ($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $state, $rootScope) {
         var self = this;
         self.currentLocation = "";
+        self.radius = 250;
+        self.displayMap = false;
+     
+     ParisApi.getCategories().then(function(response) {
+       self.categories = response.data;
+     });
+     
+       // Map
+      L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
+      var mapHome = L.mapbox.map('mapHome').setView([48.855584, 2.354613], 11).addLayer(L.mapbox.tileLayer('examples.h186knp8'));
+     
+      
 
-        self.getLocation = function () {
-          $rootScope.$broadcast('loading:show')
-          $ionicPlatform.ready(function () {
+      self.getLocation = function () {
+        $rootScope.$broadcast('loading:show')
+        $ionicPlatform.ready(function () {
 
-              var posOptions = {
-                timeout: 10000,
-                enableHighAccuracy: false
-              };
-              
-              $cordovaGeolocation
-                .getCurrentPosition(posOptions)
-                .then(function (position) {
-                  var lat = position.coords.latitude;
-                  var long = position.coords.longitude;
+            var posOptions = {
+              timeout: 10000,
+              enableHighAccuracy: false
+            };
 
-                  var geocoder = new google.maps.Geocoder();
-                  var latlng = new google.maps.LatLng(lat, long);
-                  geocoder.geocode({
-                      'latLng': latlng
-                    },
-                    function (results, status) {
-                      if (status == google.maps.GeocoderStatus.OK) {
-                        if (results[1]) {
-                          self.currentLocation = results[1].formatted_address;
-                          $scope.$apply();
+            $cordovaGeolocation
+              .getCurrentPosition(posOptions)
+              .then(function (position) {
+                var lat = position.coords.latitude;
+                var long = position.coords.longitude;
 
-                        } else {
-                          //GERER LE CAS DE LA POSITION NON TROUVEE
-                        }
+                L.marker([lat, long]).addTo(mapHome);
+                self.displayMap = true;
+
+                var geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(lat, long);
+                geocoder.geocode({
+                    'latLng': latlng
+                  },
+                  function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                      if (results[1]) {
+                        self.currentLocation = results[1].formatted_address;
+                        $scope.$apply();
                       } else {
-                        //GEOCODER FAILED
+                        //GERER LE CAS DE LA POSITION NON TROUVEE
                       }
-                    },
-                    function (err) {
-                      console.info(err);
-                    });
-                $rootScope.$broadcast('loading:hide');
-                });
-            });
+                    } else {
+                      //GEOCODER FAILED
+                    }
+                  },
+                  function (err) {
+                    console.info(err);
+                  });
+              $rootScope.$broadcast('loading:hide');
+              });
+          });
          }
-        
-        ParisApi.getCategories().then(function(response) {
-          self.categories = response.data;
-        });
-                
-
-
-
-          }])
+      }])
 
 .controller('ResultsCtrl', ['$scope', '$cordovaGeolocation', '$ionicPlatform', 'ParisApi', '$stateParams',
 function ($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $stateParams) {
@@ -99,6 +105,16 @@ function ($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $stateParams) {
             });
 
           };
+}])
+
+.controller('CategoriesCtrl', ['$scope', 'ParisApi',
+function ($scope, ParisApi) {
+    var self = this;
+  
+     ParisApi.getCategories().then(function(response) {
+       self.categories = response.data;
+     });
+    
 }])
 
 .controller('MainCtrl', ['$scope', '$ionicSideMenuDelegate',

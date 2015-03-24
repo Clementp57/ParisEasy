@@ -1,35 +1,55 @@
 <ion-view view-title="Accueil" left-buttons="leftButtons">
-    <ion-content class="padding" has-header="true">
+  <ion-content class="padding" has-header="true">
 
-        <!-- Main form -->
-        <div class="list list-inset">
-            <label class="item item-input">
-                <i class="icon ion-pound placeholder-icon"></i>
-                <input type="text" placeholder="Catégorie">
-            </label>
-            <label class="item item-input">
-                <i class="icon ion-map placeholder-icon"></i>
-                <input type="text" placeholder="Lieu, Adresse" ng-model="ctrl.currentLocation">
-            </label>
+
+    <!-- Main form -->
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-pound placeholder-icon"></i>
+        <input type="text" placeholder="Catégorie">
+
+      </label>
+      <label class="item item-input">
+        <i class="icon ion-map placeholder-icon"></i>
+        <input type="text" placeholder="Lieu, Adresse" ng-model="ctrl.currentLocation">
+      </label>
+    </div>
+
+    <div class="card" id='mapHome' ng-show="ctrl.displayMap"></div>
+
+    <div class="range range-positive" ng-show="ctrl.displayMap">
+      Rayon
+      <input type="range" name="radius" min="100" max="500" ng-model="ctrl.radius"> {{ctrl.radius}}m
+    </div>
+
+    <div class="list">
+      <label class="item item-radio">
+        <input type="radio" name="group">
+        <div class="item-content">
+          Equipements
         </div>
-        <div class="row">
-            <div class="col col-50">
-                <button ng-click="ctrl.getLocation()" class="button button-energized button-block">
-                    <i class="icon ion-android-locate"></i> Localiser
-                </button>
-            </div>
-            <div class="col col-50">
-                <button class="button button-positive button-block">
-                    <i class="icon ion-search"></i> Rechercher
-                </button>
-            </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="group">
+        <div class="item-content">
+          Activités
         </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+    </div>
 
-        <ul class="list">
-            <li class="item" ng-repeat="cat in ctrl.categories" ng-click="$state.go('main.results',{cat_id: cat.id, cat_name: cat.name} )">
-                {{ cat.name }}
-            </li>
-        </ul>
-
-    </ion-content>
+    <div class="row">
+      <div class="col col-50">
+        <button ng-click="ctrl.getLocation()" class="button button-stable button-block">
+          <i class="icon ion-android-locate"></i> Localiser
+        </button>
+      </div>
+      <div class="col col-50">
+        <button class="button button-positive button-block">
+          <i class="icon ion-search"></i> Rechercher
+        </button>
+      </div>
+    </div>
+  </ion-content>
 </ion-view>

@@ -16,12 +16,18 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
     $rootScope.$state = $state;
   
     $rootScope.$on('loading:show', function() {
-      $ionicLoading.show({template: 'Loading...'})
-    })
+      $ionicLoading.show({
+              content: '<i class="icon ion-loading-c"></i>',
+              animation: 'fade-in',
+              showBackdrop: true,
+              maxWidth: 200,
+              showDelay: 10
+            });
+    });
 
     $rootScope.$on('loading:hide', function() {
       $ionicLoading.hide()
-    })
+    });
     
 })
 
@@ -47,6 +53,17 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             'menuContent': {
                 templateUrl: 'templates/home.html',
                 controller: 'HomeCtrl as ctrl'
+            }
+        }
+    })
+    
+    // Home 
+    .state('main.categories', {
+        url: '/categories',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/categories.html',
+                controller: 'CategoriesCtrl as ctrl'
             }
         }
     })
