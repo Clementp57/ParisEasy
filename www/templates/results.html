@@ -15,7 +15,7 @@
       <div class="list">
 
           <a ng-repeat="res in ctrl.results" class="item item-thumbnail-left" href="#">
-            <img src="{{ url + res.files[0].file }}">
+            <img ng-src="{{ url + res.files[0].file }}">
             <h2 ng-bind-html="res.nom"></h2>
             <p ng-bind-html="res.lieu"></p>
           </a>
@@ -24,8 +24,9 @@
 
 
       <ion-infinite-scroll
-        on-infinite="loadData(10)"
-        distance="1%">
+        on-infinite="loadData()"
+        distance="1%"
+        immediate-check="false">
       </ion-infinite-scroll>
 
   </ion-content>

@@ -35,12 +35,13 @@ angular.module('parisEasy.controllers', [])
 
 .controller('ResultsCtrl', ['$scope', '$cordovaGeolocation', '$ionicPlatform', 'ParisApi', '$stateParams',
  function ($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $stateParams) {
-
-        var self = this;
-        self.results = {};
-        $scope.url = "http://filer.paris.fr/";
-        $scope.cat_id = $stateParams.cat_id;
-        //$scope.content.title = $stateParams.cat_name;
+		var self = this;
+		$scope.limit=10;
+		$scope.offset=0;
+		$scope.url = "http://filer.paris.fr/";
+		self.results = new Array();
+		$scope.cat_id = $stateParams.cat_id;
+		//$scope.content.title = $stateParams.cat_name;
 
         ParisApi.getActivities($scope.cat_id, '', '', '', '', 0, 10).then(function (response) {
             console.log(response);
@@ -57,14 +58,24 @@ angular.module('parisEasy.controllers', [])
             });
         });
 
-        // var loadData = function(offset, limit) {
+        $scope.loadData = function() {
 
-        // }
+        	$scope.limit+=10;
+        	$scope.offset+=10
 
+        	console.log("loading data" +  " " +  $scope.offset + " -> " + $scope.limit);
 
-        //loadData(10);
-
-
+        	ParisApi.getActivities($scope.cat_id, '', '', '', '', $scope.offset, $scope.limit).then(function (response) {
+	            
+        		angular.forEach(self.results, function(value, key) {
+        			 self.results.push(response.data[key]);
+        		});
+        		
+	           	$scope.$broadcast('scroll.infiniteScrollComplete');
+	            console.log(self.results);
+            });
+            
+        };
 }])
 
 .controller('MainCtrl', ['$scope', '$ionicSideMenuDelegate',
