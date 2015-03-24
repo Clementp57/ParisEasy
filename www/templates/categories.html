@@ -1,0 +1,9 @@
+<ion-view view-title="Catégories">
+  <ion-content class="padding">  
+    <ul class="list">
+      <li class="item" ng-repeat="cat in ctrl.categories" ng-click="$state.go('main.results',{cat_id: cat.id, cat_name: cat.name} )">
+        {{ cat.name }}
+      </li>
+    </ul>
+  </ion-content>
+</ion-view>

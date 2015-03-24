@@ -1,12 +1,12 @@
 <ion-view view-title="Accueil" left-buttons="leftButtons">
   <ion-content class="padding" has-header="true">
 
-
+    <h3>Recherche Géo-localisée</h3>
     <!-- Main form -->
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-pound placeholder-icon"></i>
-        <input type="text" placeholder="Catégorie">
+        <input type="text" placeholder="Mot clés">
 
       </label>
       <label class="item item-input">
@@ -19,7 +19,7 @@
 
     <div class="range range-positive" ng-show="ctrl.displayMap">
       Rayon
-      <input type="range" name="radius" min="100" max="500" ng-model="ctrl.radius"> {{ctrl.radius}}m
+      <input type="range" name="radius" min="100" max="3000" ng-model="ctrl.radius" ng-change="ctrl.updateFilterCircle()"> {{ctrl.radius}} m
     </div>
 
     <div class="list">
@@ -41,12 +41,12 @@
 
     <div class="row">
       <div class="col col-50">
-        <button ng-click="ctrl.getLocation()" class="button button-stable button-block">
+        <button ng-click="ctrl.getLocation()" class="button button-energized button-block button-outline">
           <i class="icon ion-android-locate"></i> Localiser
         </button>
       </div>
       <div class="col col-50">
-        <button class="button button-positive button-block">
+        <button class="button button-positive button-block button-outline">
           <i class="icon ion-search"></i> Rechercher
         </button>
       </div>
