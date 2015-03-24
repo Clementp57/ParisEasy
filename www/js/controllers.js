@@ -1,19 +1,20 @@
 angular.module('parisEasy.controllers', [])
 
 
-.controller('HomeCtrl', ['$scope', '$cordovaGeolocation', '$ionicPlatform', 'ParisApi', '$state',
-   function ($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $state) {
+.controller('HomeCtrl', ['$scope', '$cordovaGeolocation', '$ionicPlatform', 'ParisApi', '$state', '$rootScope',
+   function ($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $state, $rootScope) {
         var self = this;
         self.currentLocation = "";
 
         self.getLocation = function () {
+          $rootScope.$broadcast('loading:show')
           $ionicPlatform.ready(function () {
 
               var posOptions = {
                 timeout: 10000,
                 enableHighAccuracy: false
               };
-
+              
               $cordovaGeolocation
                 .getCurrentPosition(posOptions)
                 .then(function (position) {
@@ -30,6 +31,7 @@ angular.module('parisEasy.controllers', [])
                         if (results[1]) {
                           self.currentLocation = results[1].formatted_address;
                           $scope.$apply();
+
                         } else {
                           //GERER LE CAS DE LA POSITION NON TROUVEE
                         }
@@ -40,6 +42,7 @@ angular.module('parisEasy.controllers', [])
                     function (err) {
                       console.info(err);
                     });
+                $rootScope.$broadcast('loading:hide');
                 });
             });
          }
