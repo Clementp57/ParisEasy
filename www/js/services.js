@@ -1,8 +1,9 @@
 angular.module('parisEasy.services', [])
 
 .factory('ParisApi', ['$q', '$http', function ($q, $http) {
-    var token = "f624edf37a3ba2b5c1db2b231f273942a732be06b983b955d8c94147750e4451";
+    var token = "71b7030923bc73e5b897a2dc28653d4a40a7cec3533994868eeb43c2ebce899a";
     var baseUrl = "http://api.paris.fr/api/data/1.0/";
+    var baseUrl_4 = "http://api.paris.fr/api/data/1.4/";
 
     return {
         getCategories: function () {
@@ -25,7 +26,7 @@ angular.module('parisEasy.services', [])
             var deferred = $q.defer();
             var start = new Date().getTime(); //performance analyse
             
-            var url = baserUrl+"QueFaire/get_equipements/?token="+token;
+            var url = baseUrl+"QueFaire/get_equipements/?token="+token;
             url+= "&cid="+catId;
             url+= "&offset="+offset;
             url+= "&limit="+limit;
@@ -43,11 +44,11 @@ angular.module('parisEasy.services', [])
             return deferred.promise;
 
         },
-        getActivites: function (catId, tag, created, start, end, offset, limit) {
+        getActivities: function (catId, tag, created, start, end, offset, limit) {
             var deferred = $q.defer();
             var start = new Date().getTime(); //performance analyse
             
-            var url = baserUrl+"QueFaire/get_activites/?token="+token;
+            var url = baseUrl_4+"QueFaire/get_activities/?token="+token;
             url+= "&cid="+catId;
             url+= "&tag="+tag;
             url+= "&created="+created;
@@ -72,7 +73,7 @@ angular.module('parisEasy.services', [])
             var deferred = $q.defer();
             var start = new Date().getTime(); //performance analyse
             
-            var url = baserUrl+"QueFaire/get_activity/?token="+token;
+            var url = baseUrl+"QueFaire/get_activity/?token="+token;
             url+= "&id="+id;
 
             var result = $http.get(url).then(
@@ -90,8 +91,7 @@ angular.module('parisEasy.services', [])
         getGeoActivities: function (catId, tag, created, start, end, lat, lon, radius, offset, limit) {
             var deferred = $q.defer();
             var start = new Date().getTime(); //performance analyse
-            
-            var url = baserUrl+"QueFaire/get_geo_activites/?token="+token;
+            var url = baseUrl+"QueFaire/get_geo_activities/?token="+token;
             url+= "&cid="+catId;
             url+= "&tag="+tag;
             url+= "&created="+created;

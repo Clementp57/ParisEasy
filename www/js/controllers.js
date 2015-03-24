@@ -27,11 +27,6 @@ angular.module('parisEasy.controllers', [])
                 });
             };
 
-	self.results = function (id) {
-		console.info("Go results");
-        $state.go('tab.results', {id: id});
-    }
-
 	ParisApi.getCategories().then(function (response) {
             console.log(response.data);
             self.categories = response.data;
@@ -39,7 +34,17 @@ angular.module('parisEasy.controllers', [])
 
 }])
 
-.controller('ResultsCtrl', ['$scope','ParisApi',
-	function($scope, ParisApi) {
-		console.info('Results');
+.controller('ResultsCtrl', ['$scope','$cordovaGeolocation', '$ionicPlatform','ParisApi', '$stateParams',
+	function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $stateParams) {
+
+		var self = this;
+		$scope.cat_id = $stateParams.cat_id;
+
+		ParisApi.getActivities($scope.cat_id).then(function (response) {
+            console.log(response);
+            self.results = response.data;
+        });
+		
+		
+
 }]);

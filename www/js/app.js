@@ -1,10 +1,3 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
 angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.services', 'ngCordova'])
 
 .run(function($ionicPlatform) {
@@ -29,59 +22,21 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-  // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: "/tab",
-    abstract: true,
-    templateUrl: "templates/tabs.html"
-  })
-
-  // Each tab has its own nav history stack:
 
   // Home tab
-  .state('tab.home', {
+  .state('home', {
     url: '/home',
-    views: {
-      'tab-home': {
-        templateUrl: 'templates/tab-home.html',
-        controller: 'HomeCtrl as ctrl'
-      }
-    }
+    templateUrl: 'templates/home.html',
+    controller: 'HomeCtrl as ctrl'
   })
 
-  .state('tab.results', {
-      url: '/results',
-      views: {
-        'tab-results': {
-          templateUrl: 'templates/tab-results.html',
-          controller: 'ResultsCtrl'
-        }
-      }
-    })
-
-
-  //   .state('tab.chat-detail', {
-  //     url: '/chats/:chatId',
-  //     views: {
-  //       'tab-chats': {
-  //         templateUrl: 'templates/chat-detail.html',
-  //         controller: 'ChatDetailCtrl'
-  //       }
-  //     }
-  //   })
-
-  // .state('tab.account', {
-  //   url: '/account',
-  //   views: {
-  //     'tab-account': {
-  //       templateUrl: 'templates/tab-account.html',
-  //       controller: 'AccountCtrl'
-  //     }
-  //   }
-
- // });
+  .state('results', {
+      url: '/results/:cat_id',
+      templateUrl: 'templates/results.html',
+      controller: 'ResultsCtrl as ctrl'
+  })
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/home');
+  $urlRouterProvider.otherwise('/home');
 
 });
