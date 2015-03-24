@@ -1,54 +1,53 @@
 <ion-view view-title="Accueil" left-buttons="leftButtons">
-  <ion-content class="padding" has-header="true">
+    <ion-content class="padding" has-header="true">
 
-    <h3>Recherche Géo-localisée</h3>
-    <!-- Main form -->
-    <div class="list list-inset">
-      <label class="item item-input">
-        <i class="icon ion-pound placeholder-icon"></i>
-        <input type="text" placeholder="Mot clés">
+        <div class="list list-inset">
+            <label class="item item-input">
+                <i class="icon ion-pound placeholder-icon"></i>
+                <input type="text" placeholder="Mot clés">
 
-      </label>
-      <label class="item item-input">
-        <i class="icon ion-map placeholder-icon"></i>
-        <input type="text" placeholder="Lieu, Adresse" ng-model="ctrl.currentLocation">
-      </label>
-    </div>
-    <div class="card" id='mapHome' ng-show="ctrl.displayMap"></div>
-
-    <div class="range range-positive" ng-show="ctrl.displayMap">
-      Rayon
-      <input type="range" name="radius" min="100" max="3000" ng-model="ctrl.radius" ng-change="ctrl.updateFilterCircle()"> {{ctrl.radius}} m
-    </div>
-
-    <div class="list">
-      <label class="item item-radio">
-        <input type="radio" name="group">
-        <div class="item-content">
-          Equipements
+            </label>
+            <label class="item item-input">
+                <i class="icon ion-map placeholder-icon"></i>
+                <input type="text" placeholder="Lieu, Adresse" ng-model="ctrl.currentLocation">
+            </label>
         </div>
-        <i class="radio-icon ion-checkmark"></i>
-      </label>
-      <label class="item item-radio">
-        <input type="radio" name="group">
-        <div class="item-content">
-          Activités
-        </div>
-        <i class="radio-icon ion-checkmark"></i>
-      </label>
-    </div>
+        <div class="card" id='mapHome' ng-show="ctrl.displayMap"></div>
 
-    <div class="row">
-      <div class="col col-50">
-        <button ng-click="ctrl.getLocation()" class="button button-energized button-block button-outline">
-          <i class="icon ion-android-locate"></i> Localiser
-        </button>
-      </div>
-      <div class="col col-50">
-        <button class="button button-positive button-block button-outline">
-          <i class="icon ion-search"></i> Rechercher
-        </button>
-      </div>
-    </div>
-  </ion-content>
+        <div class="range range-positive" ng-show="ctrl.displayMap">
+            Rayon
+            <input type="range" name="radius" min="100" max="3000" ng-model="ctrl.radius" ng-change="ctrl.updateFilterCircle()">{{ctrl.radius}} m
+        </div>
+
+        <div class="list">
+            <label class="item item-radio">
+                <input type="radio" name="group">
+                <div class="item-content">
+                    Equipements
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+            </label>
+            <label class="item item-radio">
+                <input type="radio" name="group">
+                <div class="item-content">
+                    Activités
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+            </label>
+        </div>
+
+        <div class="row">
+            <div class="col col-50">
+                <button ng-click="ctrl.getLocation()" class="button button-energized button-block button-outline">
+                    <i class="icon ion-android-locate"></i> Localiser
+                </button>
+            </div>
+            <div class="col col-50">
+                <button class="button button-positive button-block button-outline">
+                    <i class="icon ion-search"></i> Rechercher
+                </button>
+            </div>
+        </div>
+
+    </ion-content>
 </ion-view>

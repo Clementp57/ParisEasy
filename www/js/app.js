@@ -1,7 +1,6 @@
 angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.services', 'ngCordova'])
 
 .run(function($ionicPlatform, $rootScope, $state, $ionicLoading) {
-  
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -39,6 +38,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
     // Set up the various states which the app can be in.
     // Each state's controller can be found in controllers.js
     $stateProvider
+
     .state('main', {
         url: '/main',
         templateUrl: 'templates/sidemenu.html',
@@ -57,6 +57,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         }
     })
 
+    // Home 
     .state('main.categories', {
         url: '/categories',
         views: {
@@ -77,10 +78,14 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         }
     })
 
-    .state('result', {
+    .state('main.result', {
         url: '/result/:id',
-        templateUrl: 'templates/result.html',
-        controller: 'ResultCtrl as ctrl'
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/result.html',
+                controller: 'ResultCtrl as ctrl'
+            }
+        }
     })
 
     // if none of the above states are matched, use this as the fallback

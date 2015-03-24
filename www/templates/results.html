@@ -1,35 +1,32 @@
-<ion-view view-title="Résultats" >
-  <ion-content>
+<ion-view view-title="Résultats">
+    <ion-content>
 
-      <!-- <ion-refresher
+        <!-- <ion-refresher
         pulling-text="Pull to refresh..."
         on-refresh="doRefresh()">
       </ion-refresher> -->
 
-      <div id='map'></div>
+        <div id='map'></div>
 
-      <div class="item item-divider">
-         <i class="icon ion-location"></i> {{ ctrl.results.length }} résultats
-      </div>
+        <div class="item item-divider">
+            <i class="icon ion-location"></i> {{ ctrl.results.length }} résultats
+        </div>
 
-      <div class="list">
+        <div class="list">
 
-          <a ui-sref="result({id: res.idactivites })" ng-repeat="res in ctrl.results" class="item item-thumbnail-left">
-            <img ng-src="{{ url + res.files[0].file }}">
-            <h2 ng-bind-html="res.nom"></h2>
-            <p ng-bind-html="res.lieu"></p>
-          </a>
+            <a ui-sref="main.result({id: res.idactivites })" ng-repeat="res in ctrl.results" class="item item-thumbnail-left">
+                <img ng-src="{{ url + res.files[0].file }}">
+                <h2 ng-bind-html="res.nom"></h2>
+                <p ng-bind-html="res.lieu"></p>
+            </a>
 
-      </div>
+        </div>
 
 
-      <ion-infinite-scroll
-        on-infinite="loadData()"
-        distance="1%"
-        immediate-check="false">
-      </ion-infinite-scroll>
+        <ion-infinite-scroll on-infinite="loadData()" distance="1%" immediate-check="false">
+        </ion-infinite-scroll>
 
-  </ion-content>
+    </ion-content>
 </ion-view>
 
 

@@ -8,18 +8,7 @@ angular.module('parisEasy.controllers', [])
         self.radius = 500;
         self.displayMap = false;
         var filterCircle = null;
-
-        // Map
-        L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
-        var mapHome = L.mapbox.map('mapHome')
-            .setView([48.855584, 2.354613], 11)
-            .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
-
-        var posOptions = {
-            timeout: 30000,
-            enableHighAccuracy: true,
-            maximumAge: 10000
-        };
+        var mapHome = null;
 
         ParisApi.getCategories().then(function(response) {
             self.categories = response.data;
@@ -32,6 +21,16 @@ angular.module('parisEasy.controllers', [])
         }
 
         self.displayPosition = function(position) {
+            L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
+            var mapHome = L.mapbox.map('mapHome')
+                .setView([48.855584, 2.354613], 11)
+                .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
+
+            var posOptions = {
+                timeout: 30000,
+                enableHighAccuracy: true,
+                maximumAge: 10000
+            };
             var lat = position.coords.latitude;
             var long = position.coords.longitude;
 
@@ -143,6 +142,7 @@ angular.module('parisEasy.controllers', [])
 
             // Map
             L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
+
             var map_solo = L.mapbox.map('map_solo')
                 .setView([$scope.result.lat, $scope.result.lon], 15)
                 .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
@@ -168,7 +168,7 @@ angular.module('parisEasy.controllers', [])
                     }
                 });
 
-                console.log($scope.pics)
+                console.log($scope.pics);
             });
 
 
