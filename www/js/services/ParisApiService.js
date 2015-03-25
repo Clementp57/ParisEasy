@@ -190,6 +190,17 @@ angular.module('parisEasy.services')
                                 10
                             );
                             break;
+                        
+                        case 'searchActivity':
+                            return this.searchActivity(
+                                requestHolder.catId,
+                                requestHolder.position.coords.latitude,
+                                requestHolder.position.coords.longitude,
+                                requestHolder.radius,
+                                0,
+                                10
+                            );
+                            break;
 
                         default:
                             break;

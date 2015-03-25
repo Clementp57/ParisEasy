@@ -57,6 +57,16 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     })
+    
+    .state('main.searchActivity', {
+        url: '/searchActivity',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/searchActivity.html',
+                controller: 'SearchActivityCtrl as ctrl'
+            }
+        }
+    })
 
     .state('main.categories', {
         url: '/categories',

@@ -5,7 +5,7 @@
         </div>
 
         <div class="list">
-            <a ui-sref="main.result({id: res.idactivites })" ng-repeat="res in ctrl.results" class="item">
+            <a ui-sref="main.equipmentResult({id: res.id })" ng-repeat="res in ctrl.results" class="item">
                 <h2 ng-bind-html="res.name"></h2>
                 <p ng-bind-html="res.address"></p>
             </a>
