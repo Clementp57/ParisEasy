@@ -90,12 +90,22 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         }
     })
     
-    .state('main.searchResults', {
-        url: '/searchResults',
+    .state('main.searchActivitiesResults', {
+        url: '/searchActivitiesResults',
         views: {
             'menuContent': {
-                templateUrl: 'templates/searchResults.html',
-                controller: 'SearchResultsCtrl as ctrl'
+                templateUrl: 'templates/searchActivitiesResults.html',
+                controller: 'SearchActivitiesResultsCtrl as ctrl'
+            }
+        }
+    })
+    
+    .state('main.searchEquipmentsResults', {
+        url: '/searchEquipmentsResults',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/searchEquipmentsResults.html',
+                controller: 'SearchEquipmentsResultsCtrl as ctrl'
             }
         }
     })

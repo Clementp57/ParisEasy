@@ -57,7 +57,7 @@ angular.module('parisEasy.services')
                                 };
                             } else {
                                 $ionicLoading.show({
-                                    template: 'Impossible de localiser l\'adress fournie. Merci de la vérifier.',
+                                    template: 'Impossible de localiser l\'adresse fournie. Merci de la vérifier.',
                                     duration: 2000
                                 });
                                 deferred.reject();

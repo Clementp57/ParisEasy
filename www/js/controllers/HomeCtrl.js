@@ -1,18 +1,26 @@
 angular.module('parisEasy.controllers')
-    .controller('HomeCtrl', ['$scope', 'ParisApiService', '$state', '$rootScope', 'GeoLocationService', '$ionicLoading',
-        function($scope, ParisApiService, $state, $rootScope, GeoLocationService, $ionicLoading) {
+    .controller('HomeCtrl', ['$scope', 'ParisApiService', '$state', '$rootScope', 'GeoLocationService', '$ionicLoading', '$ionicScrollDelegate',
+        function($scope, ParisApiService, $state, $rootScope, GeoLocationService, $ionicLoading, $ionicScrollDelegate) {
             var self = this;
-            self.displayMap = false;
             var filterCircle = null;
             var mapHome = null;
+
+            self.displayMap = false;
             self.requestHolder = {
                 catId: 0,
                 currentLocation: '',
-                radius: 500,
+                radius: 3000,
                 type: 'activity',
                 position: {}
             };
 
+            //Map initialization
+            L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
+            mapHome = L.mapbox.map('mapHome')
+                .setView([48.855584, 2.354613], 11)
+                .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
+
+            //Categories
             ParisApiService.getCategories().then(function(response) {
                 self.categories = response.data;
             });
@@ -24,11 +32,6 @@ angular.module('parisEasy.controllers')
             }
 
             self.displayPosition = function(position) {
-                L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
-                var mapHome = L.mapbox.map('mapHome')
-                    .setView([48.855584, 2.354613], 11)
-                    .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
-
                 var posOptions = {
                     timeout: 30000,
                     enableHighAccuracy: true,
@@ -39,18 +42,19 @@ angular.module('parisEasy.controllers')
 
                 L.marker([lat, long]).addTo(mapHome);
 
-                filterCircle = L.circle(L.latLng(lat, long), 500, {
+                filterCircle = L.circle(L.latLng(lat, long), 3000, {
                     opacity: 0.4,
                     weight: 1,
                     fillOpacity: 0.4
                 }).addTo(mapHome);
 
                 self.displayMap = true;
+                $ionicScrollDelegate.scrollBottom();
             }
 
             self.displayReverseGeoCode = function(position) {
-                GeoLocationService.getAddressFromPosition(position).then(function(adress) {
-                    self.requestHolder.currentLocation = results[1].formatted_address;
+                GeoLocationService.getAddressFromPosition(position).then(function(address) {
+                    self.requestHolder.currentLocation = address;
                 });
             }
 
@@ -75,7 +79,7 @@ angular.module('parisEasy.controllers')
                     self.requestHolder.position = position;
                     self.displayPosition(position);
                     $rootScope.$broadcast('loading:hide');
-                }, function(error){
+                }, function(error) {
                     $rootScope.$broadcast('loading:hide');
                 });
             }
@@ -87,15 +91,24 @@ angular.module('parisEasy.controllers')
                         duration: 2000
                     });
                     return;
-                } else if (self.requestHolder.currentLocation != '') {
+                } else if (self.requestHolder.currentLocation != '' && !self.requestHolder.position.coords) {
                     GeoLocationService.getPositionFromAddress(self.requestHolder.currentLocation).then(function(position) {
                         self.requestHolder.position = position;
                         ParisApiService.setRequestHolder(self.requestHolder);
-                        $state.go('main.searchResults');
+                        if (self.requestHolder.type == 'activity') {
+                            $state.go('main.searchActivitiesResults');
+                        } else {
+                            $state.go('main.searchEquipmentsResults');
+                        }
                     });
                 } else {
+                    console.log(self.requestHolder);
                     ParisApiService.setRequestHolder(self.requestHolder);
-                    $state.go('main.searchResults');
+                    if (self.requestHolder.type == 'activity') {
+                        $state.go('main.searchActivitiesResults');
+                    } else {
+                        $state.go('main.searchEquipmentsResults');
+                    }
                 }
 
             }

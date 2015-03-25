@@ -1,7 +1,8 @@
 #map,
 #map_solo,
 #mapHome,
-#mapSearchResults{
+#mapActivities,
+#mapEquipments{
     height: 300px;
     width: 100%;
 }

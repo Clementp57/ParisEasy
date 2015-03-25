@@ -1,7 +1,8 @@
 angular.module('parisEasy.controllers')
-    .controller('SearchResultsCtrl', ['$scope', 'ParisApiService', '$stateParams', '$state',
+    .controller('SearchActivitiesResultsCtrl', ['$scope', 'ParisApiService', '$stateParams', '$state',
         function($scope, ParisApiService, $stateParams, $state) {
             var self = this;
+            $scope.url = "http://filer.paris.fr/";
           
             ParisApiService.executeRequestHolder().then(function(response) {
                 self.results = response.data;
@@ -9,7 +10,7 @@ angular.module('parisEasy.controllers')
 
                 // Map
                 L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
-                var map = L.mapbox.map('mapSearchResults')
+                var map = L.mapbox.map('mapActivities')
                     .setView([48.855584, 2.354613], 11)
                     .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
 

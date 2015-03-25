@@ -1,0 +1,27 @@
+<ion-view view-title="Résultats : Activités">
+    <ion-content>
+
+        <div id='mapActivities'></div>
+
+        <div class="item item-divider">
+            <i class="icon ion-location"></i> {{ ctrl.results.length }} résultats
+        </div>
+
+        <div class="list">
+
+            <a ui-sref="main.result({id: res.idactivites })" ng-repeat="res in ctrl.results" class="item item-thumbnail-left">
+                <img ng-src="{{ res.files[0].path }}">
+                <h2 ng-bind-html="res.nom"></h2>
+                <p ng-bind-html="res.lieu"></p>
+            </a>
+
+        </div>
+
+
+        <ion-infinite-scroll on-infinite="loadData()" distance="1%" immediate-check="false">
+        </ion-infinite-scroll>
+
+    </ion-content>
+</ion-view>
+
+
