@@ -1,0 +1,29 @@
+<ion-view view-title="Equipements">
+    <ion-content>
+         <div class="list" style="margin-bottom:0px">
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Catégorie :
+                </div>
+                <select ng-model="ctrl.category" ng-change="ctrl.reloadEquipments()">
+                    <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}">{{ cat.name }}</option>
+                </select>
+            </label>
+        </div>
+        
+        <div id='mapEquipments'></div>
+        
+        <div class="item item-divider">
+            <i class="icon ion-location"></i> {{ ctrl.equipments.length }} résultats
+        </div>
+        
+        
+        
+
+        <ul class="list">
+            <li class="item" ng-repeat="eq in ctrl.equipments" ng-click="$state.go('main.equipmentResult',{id: eq.id} )">
+                {{ eq.name }}
+            </li>
+        </ul>
+    </ion-content>
+</ion-view>

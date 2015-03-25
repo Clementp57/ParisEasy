@@ -1,5 +1,5 @@
 angular.module('parisEasy.controllers')
-    .controller('ResultsCtrl', ['$scope', 'ParisApiService', '$stateParams',
+    .controller('ActivityResultsCtrl', ['$scope', 'ParisApiService', '$stateParams',
         function($scope, ParisApiService, $stateParams) {
             var self = this;
             $scope.limit = 10;

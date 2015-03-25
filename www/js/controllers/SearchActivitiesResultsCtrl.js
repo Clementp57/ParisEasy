@@ -2,8 +2,10 @@ angular.module('parisEasy.controllers')
     .controller('SearchActivitiesResultsCtrl', ['$scope', 'ParisApiService', '$stateParams', '$state',
         function($scope, ParisApiService, $stateParams, $state) {
             var self = this;
-            $scope.url = "http://filer.paris.fr/";
           
+            $scope.limit = 10;
+            $scope.offset = 0;
+
             ParisApiService.executeRequestHolder().then(function(response) {
                 self.results = response.data;
                 console.log(response);
@@ -18,6 +20,22 @@ angular.module('parisEasy.controllers')
                     L.marker([self.results[key].lat, self.results[key].lon]).addTo(map);
                 });
             });
+
+            $scope.loadData = function() {
+
+                $scope.limit += 10;
+                $scope.offset += 10
+
+                ParisApiService.executeRequestHolder().then(function(response) {
+
+                    angular.forEach(self.results, function(value, key) {
+                        self.results.push(response.data[key]);
+                    });
+
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                });
+
+            };
 
 
         }

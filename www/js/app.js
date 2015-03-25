@@ -58,7 +58,6 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         }
     })
 
-    // Home 
     .state('main.categories', {
         url: '/categories',
         views: {
@@ -68,24 +67,43 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     })
-
-    .state('main.results', {
-        url: '/results/:cat_id',
+    
+     .state('main.equipments', {
+        url: '/equipments',
         views: {
             'menuContent': {
-                templateUrl: 'templates/results.html',
-                controller: 'ResultsCtrl as ctrl'
+                templateUrl: 'templates/equipments.html',
+                controller: 'EquipmentsCtrl as ctrl'
             }
         }
     })
 
-    .state('main.result', {
-        params: { datas : null},
-        url: '/result/:id',
+    .state('main.activityResults', {
+        url: '/results/:cat_id',
         views: {
             'menuContent': {
-                templateUrl: 'templates/result.html',
-                controller: 'ResultCtrl as ctrl'
+                templateUrl: 'templates/activityResults.html',
+                controller: 'ActivityResultsCtrl as ctrl'
+            }
+        }
+    })
+
+    .state('main.activityResult', {
+        url: '/activity/:id',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/activityResult.html',
+                controller: 'ActivityResultCtrl as ctrl'
+            }
+        }
+    })
+    
+     .state('main.equipmentResult', {
+        url: '/equipment/:id',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/equipmentResult.html',
+                controller: 'EquipmentResultCtrl as ctrl'
             }
         }
     })

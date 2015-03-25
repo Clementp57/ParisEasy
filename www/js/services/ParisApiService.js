@@ -25,11 +25,11 @@ angular.module('parisEasy.services')
 
                     return deferred.promise;
                 },
-                getEquipements: function(catId, offset, limit) {
+                getEquipments: function(catId, offset, limit) {
                     var deferred = $q.defer();
                     var start = new Date().getTime(); //performance analyse
 
-                    var url = baseUrl + "QueFaire/get_equipements/?token=" + token;
+                    var url = baseUrl_11 + "Equipements/get_equipements/?token=" + token;
                     url += "&cid=" + catId;
                     url += "&offset=" + offset;
                     url += "&limit=" + limit;
@@ -77,6 +77,25 @@ angular.module('parisEasy.services')
                     var start = new Date().getTime(); //performance analyse
 
                     var url = baseUrl + "QueFaire/get_activity/?token=" + token;
+                    url += "&id=" + id;
+
+                    var result = $http.get(url).then(
+                        function(response) {
+                            deferred.resolve(result);
+                            console.log('time taken for request: ' + (new Date().getTime() - start) + 'ms'); //debug
+                            return response.data;
+                        },
+                        function() {
+                            //$rootScope.notify('La connexion avec le serveur à échouée. Essayez de recharger la page.','error')
+                        });
+
+                    return deferred.promise;
+                },
+                getEquipment: function(id) {
+                    var deferred = $q.defer();
+                    var start = new Date().getTime(); //performance analyse
+
+                    var url = baseUrl + "Equipements/get_equipement/?token=" + token;
                     url += "&id=" + id;
 
                     var result = $http.get(url).then(
