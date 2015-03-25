@@ -1,6 +1,6 @@
-angular.module('parisEasy')
-    .controller('ResultsCtrl', ['$scope', '$cordovaGeolocation', '$ionicPlatform', 'ParisApi', '$stateParams',
-        function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $stateParams) {
+angular.module('parisEasy.controllers')
+    .controller('ResultsCtrl', ['$scope', 'ParisApiService', '$stateParams',
+        function($scope, ParisApiService, $stateParams) {
             var self = this;
             $scope.limit = 10;
             $scope.offset = 0;
@@ -9,7 +9,7 @@ angular.module('parisEasy')
             $scope.cat_id = $stateParams.cat_id;
             //$scope.content.title = $stateParams.cat_name;
 
-            ParisApi.getActivities($scope.cat_id, '', '', '', '', 0, 10).then(function(response) {
+            ParisApiService.getActivities($scope.cat_id, '', '', '', '', 0, 10).then(function(response) {
                 console.log(response);
                 self.results = response.data;
 
@@ -29,7 +29,7 @@ angular.module('parisEasy')
                 $scope.limit += 10;
                 $scope.offset += 10
 
-                ParisApi.getActivities($scope.cat_id, '', '', '', '', $scope.offset, $scope.limit).then(function(response) {
+                ParisApiService.getActivities($scope.cat_id, '', '', '', '', $scope.offset, $scope.limit).then(function(response) {
 
                     angular.forEach(self.results, function(value, key) {
                         self.results.push(response.data[key]);
@@ -42,4 +42,4 @@ angular.module('parisEasy')
             };
 
         }
-    ])
+    ]);

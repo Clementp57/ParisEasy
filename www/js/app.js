@@ -1,6 +1,6 @@
-angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.services', 'ngCordova'])
+angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.services', 'ngCordova', 'ngSanitize'])
 
-.run(function($ionicPlatform, $rootScope, $state, $ionicLoading) {
+.run(function($ionicPlatform, $rootScope, $state, $ionicLoading, $sce) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -29,6 +29,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         $ionicLoading.hide()
     });
 
+    $rootScope.trustAsHtml = $sce.trustAsHtml;
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -79,11 +80,22 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
     })
 
     .state('main.result', {
+        params: { datas : null},
         url: '/result/:id',
         views: {
             'menuContent': {
                 templateUrl: 'templates/result.html',
                 controller: 'ResultCtrl as ctrl'
+            }
+        }
+    })
+    
+    .state('main.searchResults', {
+        url: '/searchResults',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/searchResults.html',
+                controller: 'SearchResultsCtrl as ctrl'
             }
         }
     })
@@ -106,5 +118,21 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
                 return response
             }
         }
-    })
+    });
+
+    $httpProvider.interceptors.push(function($q, $injector) {
+        return {
+            'responseError': function(rejection) {
+                // do something on error
+                $injector.get("$ionicLoading").show({
+                    template: "Error ... Please retry later.",
+                    duration : 2000
+                });
+                return $q.reject(rejection);
+            }
+        }
+    });
 });
+
+angular.module('parisEasy.controllers', []);
+angular.module('parisEasy.services', []);

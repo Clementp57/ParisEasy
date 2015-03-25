@@ -1,20 +1,25 @@
-angular.module('parisEasy')
-    .controller('HomeCtrl', ['$scope', '$cordovaGeolocation', '$ionicPlatform', 'ParisApi', '$state', '$rootScope', 'GeoLocationService',
-        function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $state, $rootScope, GeoLocationService) {
+angular.module('parisEasy.controllers')
+    .controller('HomeCtrl', ['$scope', 'ParisApiService', '$state', '$rootScope', 'GeoLocationService',
+        function($scope, ParisApiService, $state, $rootScope, GeoLocationService) {
             var self = this;
-            self.currentLocation = "";
-            self.radius = 500;
             self.displayMap = false;
             var filterCircle = null;
             var mapHome = null;
+            self.requestHolder = {
+              catId: 0,
+              currentLocation: '',
+              radius: 500,
+              type: 'activity',
+              position: {}
+            };
 
-            ParisApi.getCategories().then(function(response) {
+            ParisApiService.getCategories().then(function(response) {
                 self.categories = response.data;
             });
 
             self.updateFilterCircle = function() {
                 if (filterCircle) {
-                    filterCircle.setRadius(self.radius);
+                    filterCircle.setRadius(self.requestHolder.radius);
                 }
             }
 
@@ -54,7 +59,7 @@ angular.module('parisEasy')
                     function(results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
                             if (results[1]) {
-                                self.currentLocation = results[1].formatted_address;
+                                self.requestHolder.currentLocation = results[1].formatted_address;
                             }
                         }
                     },
@@ -69,7 +74,7 @@ angular.module('parisEasy')
                 GeoLocationService
                     .getCurrentPosition()
                     .then(function(position) {
-                        console.log(position);
+                        self.requestHolder.position = position;
                         self.displayPosition(position);
                         $rootScope.$broadcast('loading:hide');
                         self.displayReverseGeoCode(position);
@@ -77,6 +82,12 @@ angular.module('parisEasy')
                         //GEOLOC FAILED (Timeout)
                         $rootScope.$broadcast('loading:hide');
                     });
+            }
+            
+            self.search = function() {
+              console.log(self.requestHolder);
+              ParisApiService.setRequestHolder(self.requestHolder);
+              $state.go('main.searchResults');
             }
         }
     ]);

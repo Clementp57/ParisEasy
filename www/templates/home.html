@@ -3,32 +3,35 @@
 
         <div class="list list-inset">
             <label class="item item-input">
-                <i class="icon ion-pound placeholder-icon"></i>
-                <input type="text" placeholder="Mot clés">
-
-            </label>
-            <label class="item item-input">
                 <i class="icon ion-map placeholder-icon"></i>
-                <input type="text" placeholder="Lieu, Adresse" ng-model="ctrl.currentLocation">
+                <input type="text" placeholder="Lieu, Adresse" ng-model="ctrl.requestHolder.currentLocation">
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Catégorie
+                </div>
+                <select ng-model="ctrl.requestHolder.catId">
+                    <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}">{{ cat.name }}</option>
+                </select>
             </label>
         </div>
         <div class="card" id='mapHome' ng-show="ctrl.displayMap"></div>
 
         <div class="range range-positive" ng-show="ctrl.displayMap">
             Rayon
-            <input type="range" name="radius" min="100" max="3000" ng-model="ctrl.radius" ng-change="ctrl.updateFilterCircle()">{{ctrl.radius}} m
+            <input type="range" name="radius" min="100" max="3000" ng-model="ctrl.requestHolder.radius" ng-change="ctrl.updateFilterCircle()">{{ctrl.requestHolder.radius}} m
         </div>
 
         <div class="list">
             <label class="item item-radio">
-                <input type="radio" name="group">
+                <input type="radio" name="type" ng-model="ctrl.requestHolder.type" ng-value="'equipment'">
                 <div class="item-content">
                     Equipements
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
-                <input type="radio" name="group">
+                <input type="radio" name="type" ng-model="ctrl.requestHolder.type" ng-value="'activity'">
                 <div class="item-content">
                     Activités
                 </div>
@@ -43,7 +46,7 @@
                 </button>
             </div>
             <div class="col col-50">
-                <button class="button button-positive button-block button-outline">
+                <button class="button button-positive button-block button-outline" ng-click="ctrl.search()">
                     <i class="icon ion-search"></i> Rechercher
                 </button>
             </div>

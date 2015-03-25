@@ -1,6 +1,7 @@
 #map,
 #map_solo,
-#mapHome {
+#mapHome,
+#mapSearchResults{
     height: 300px;
     width: 100%;
 }

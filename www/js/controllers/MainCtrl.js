@@ -1,4 +1,4 @@
-angular.module('parisEasy')
+angular.module('parisEasy.controllers')
     .controller('MainCtrl', ['$scope', '$ionicSideMenuDelegate',
         function($scope, $ionicSideMenuDelegate) {
             $scope.toggleMenu = function() {

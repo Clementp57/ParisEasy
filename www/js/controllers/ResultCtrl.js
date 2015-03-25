@@ -1,13 +1,13 @@
-angular.module('parisEasy')
-    .controller('ResultCtrl', ['$scope', 'ParisApi', '$stateParams', '$interval', 'instagram',
-        function($scope, ParisApi, $stateParams, $interval, instagram) {
+angular.module('parisEasy.controllers')
+    .controller('ResultCtrl', ['$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService',
+        function($scope, ParisApiService, $stateParams, $interval, InstagramService) {
 
             $scope.result = null;
             $scope.url = "http://filer.paris.fr/";
             $scope.id = $stateParams.id;
             console.log($scope.id);
 
-            ParisApi.getActivity($scope.id).then(function(response) {
+            ParisApiService.getActivity($scope.id).then(function(response) {
 
                 $scope.result = response.data[0];
 
@@ -23,7 +23,7 @@ angular.module('parisEasy')
                 console.log($scope.result);
 
                 $scope.locations = [];
-                instagram.getLocation($scope.result.lat, $scope.result.lon, function(data) {
+                InstagramService.getLocation($scope.result.lat, $scope.result.lon, function(data) {
                     console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         $scope.locations.push(data[i]);
@@ -32,7 +32,7 @@ angular.module('parisEasy')
                     var id_location = $scope.locations[0].id;
 
                     $scope.pics = [];
-                    instagram.getImages(id_location, function(data) {
+                    InstagramService.getImages(id_location, function(data) {
                         console.log(data);
                         for (var i = 0; i < data.length; i++) {
                             $scope.pics.push(data[i]);
@@ -47,4 +47,4 @@ angular.module('parisEasy')
             });
 
         }
-    ])
+    ]);
