@@ -137,6 +137,16 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     })
+    
+    .state('main.camera', {
+        url: '/camera',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/camera.html',
+                controller: 'CameraCtrl as ctrl'
+            }
+        }
+    });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('main/home');

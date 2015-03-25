@@ -7,17 +7,14 @@ angular.module('parisEasy.controllers')
             $scope.url = "http://filer.paris.fr/";
             self.results = new Array();
             $scope.cat_id = $stateParams.cat_id;
-            //$scope.content.title = $stateParams.cat_name;
+
+            L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
+            var map = L.mapbox.map('map')
+                .setView([48.855584, 2.354613], 11)
+                .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
 
             ParisApiService.getActivities($scope.cat_id, '', '', '', '', 0, 10).then(function(response) {
-                console.log(response);
                 self.results = response.data;
-
-                // Map
-                L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
-                var map = L.mapbox.map('map')
-                    .setView([48.855584, 2.354613], 11)
-                    .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
 
                 angular.forEach(self.results, function(value, key) {
                     L.marker([self.results[key].lat, self.results[key].lon]).addTo(map);
@@ -36,7 +33,6 @@ angular.module('parisEasy.controllers')
                     });
 
                     $scope.$broadcast('scroll.infiniteScrollComplete');
-                    console.log(self.results);
                 });
 
             };

@@ -7,16 +7,7 @@ angular.module('parisEasy.services')
                 maximumAge: 90000
             };
 
-            var geolocation = false;
-            if (navigator.geolocation) {
-                geolocation = navigator.geolocation;
-            }
-
-            if (geolocation) {
-                var locationService = geolocation; // native HTML5 geolocation
-            } else {
-                var locationService = navigator.geolocation; // cordova geolocation plugin
-            }
+            var locationService = navigator.geolocation; // cordova geolocation plugin
 
             return {
                 getCurrentPosition: function() {
@@ -91,6 +82,23 @@ angular.module('parisEasy.services')
                             console.info(err);
                             deferred.reject();
                         });
+
+                    return deferred.promise;
+                },
+                computeRoute: function(startPosition, endPosition, travelMode) {
+                    var directionsService = new google.maps.DirectionsService();
+                    var deferred = $q.defer();
+
+                    var request = {
+                        origin: startPosition,
+                        destination: endPosition,
+                        travelMode: google.maps.TravelMode.DRIVING
+                    };
+                    directionsService.route(request, function(result, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            deferred.resolve(result);
+                        }
+                    });
 
                     return deferred.promise;
                 }

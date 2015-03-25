@@ -3,7 +3,7 @@ angular.module('parisEasy.controllers')
         function($scope, ParisApiService, $state, $rootScope, GeoLocationService, $ionicLoading, $ionicScrollDelegate) {
             var self = this;
             var filterCircle = null;
-            var mapHome = null;
+            var map_home = null;
 
             self.displayMap = false;
             self.requestHolder = {
@@ -16,9 +16,13 @@ angular.module('parisEasy.controllers')
 
             //Map initialization
             L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
-            mapHome = L.mapbox.map('mapHome')
+            map_home = L.mapbox.map('mapHome')
                 .setView([48.855584, 2.354613], 11)
                 .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
+          
+            map_home.featureLayer.on('click', function(e) {
+                map_home.panTo(e.layer.getLatLng());
+            });
 
             //Categories
             ParisApiService.getCategories().then(function(response) {
@@ -39,17 +43,17 @@ angular.module('parisEasy.controllers')
                 };
                 var lat = position.coords.latitude;
                 var long = position.coords.longitude;
-
-                L.marker([lat, long]).addTo(mapHome);
+                
+                map_home.panTo([lat, long]);
+                L.marker([lat, long]).addTo(map_home);
 
                 filterCircle = L.circle(L.latLng(lat, long), 3000, {
                     opacity: 0.4,
                     weight: 1,
                     fillOpacity: 0.4
-                }).addTo(mapHome);
+                }).addTo(map_home);
 
                 self.displayMap = true;
-                $ionicScrollDelegate.scrollBottom();
             }
 
             self.displayReverseGeoCode = function(position) {
@@ -67,6 +71,7 @@ angular.module('parisEasy.controllers')
                         self.displayPosition(position);
                         $rootScope.$broadcast('loading:hide');
                         self.displayReverseGeoCode(position);
+                        $rootScope.userPosition = position;
                     }, function(error) {
                         //GEOLOC FAILED (Timeout)
                         $rootScope.$broadcast('loading:hide');
@@ -78,6 +83,7 @@ angular.module('parisEasy.controllers')
                 GeoLocationService.getPositionFromAddress(self.requestHolder.currentLocation).then(function(position) {
                     self.requestHolder.position = position;
                     self.displayPosition(position);
+                    $rootScope.userPosition = position;
                     $rootScope.$broadcast('loading:hide');
                 }, function(error) {
                     $rootScope.$broadcast('loading:hide');
@@ -94,6 +100,7 @@ angular.module('parisEasy.controllers')
                 } else if (self.requestHolder.currentLocation != '' && !self.requestHolder.position.coords) {
                     GeoLocationService.getPositionFromAddress(self.requestHolder.currentLocation).then(function(position) {
                         self.requestHolder.position = position;
+                        $rootScope.userPosition = position;
                         ParisApiService.setRequestHolder(self.requestHolder);
                         if (self.requestHolder.type == 'activity') {
                             $state.go('main.searchActivitiesResults');

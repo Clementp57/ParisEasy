@@ -3,17 +3,21 @@ angular.module('parisEasy.controllers')
         function($scope, ParisApiService) {
             var self = this;
             self.category = 0;
+            var map = null;
 
             // Map
             L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
-            var map = L.mapbox.map('mapEquipments')
-                .setView([48.855584, 2.354613], 11)
-                .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
-
-
+            if (map == null) {
+                map = L.mapbox.map('mapEquipments');
+            }
+          
             ParisApiService.getCategories().then(function(response) {
                 self.categories = response.data;
                 self.reloadEquipments();
+
+                map.setView([48.855584, 2.354613], 11)
+                    .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
+
             });
 
             self.reloadEquipments = function() {
@@ -26,8 +30,5 @@ angular.module('parisEasy.controllers')
 
                 });
             }
-
-
-
         }
     ]);
