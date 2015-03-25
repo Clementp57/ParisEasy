@@ -2,10 +2,17 @@
     <ion-content class="padding" has-header="true">
 
         <div class="list list-inset">
-            <label class="item item-input">
-                <i class="icon ion-map placeholder-icon"></i>
-                <input type="text" placeholder="Lieu, Adresse" ng-model="ctrl.requestHolder.currentLocation">
-            </label>
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                  
+                    <i class="icon ion-map placeholder-icon"></i>
+                    <input type="text" placeholder="Lieu, Adresse" ng-model="ctrl.requestHolder.currentLocation">
+                </label>
+                <button class="button button-small button-positive" ng-click="ctrl.getPosition()">
+                    Localiser
+                </button>
+            </div>
+
             <label class="item item-input item-select">
                 <div class="input-label">
                     Catégorie
@@ -17,7 +24,7 @@
         </div>
         <div class="card" id='mapHome' ng-show="ctrl.displayMap"></div>
 
-        <div class="range range-positive" ng-show="ctrl.displayMap">
+        <div class="range range-positive">
             Rayon
             <input type="range" name="radius" min="100" max="3000" ng-model="ctrl.requestHolder.radius" ng-change="ctrl.updateFilterCircle()">{{ctrl.requestHolder.radius}} m
         </div>

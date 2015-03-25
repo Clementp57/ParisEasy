@@ -1,16 +1,16 @@
 angular.module('parisEasy.controllers')
-    .controller('HomeCtrl', ['$scope', 'ParisApiService', '$state', '$rootScope', 'GeoLocationService',
-        function($scope, ParisApiService, $state, $rootScope, GeoLocationService) {
+    .controller('HomeCtrl', ['$scope', 'ParisApiService', '$state', '$rootScope', 'GeoLocationService', '$ionicLoading',
+        function($scope, ParisApiService, $state, $rootScope, GeoLocationService, $ionicLoading) {
             var self = this;
             self.displayMap = false;
             var filterCircle = null;
             var mapHome = null;
             self.requestHolder = {
-              catId: 0,
-              currentLocation: '',
-              radius: 500,
-              type: 'activity',
-              position: {}
+                catId: 0,
+                currentLocation: '',
+                radius: 500,
+                type: 'activity',
+                position: {}
             };
 
             ParisApiService.getCategories().then(function(response) {
@@ -49,24 +49,9 @@ angular.module('parisEasy.controllers')
             }
 
             self.displayReverseGeoCode = function(position) {
-                var lat = position.coords.latitude;
-                var long = position.coords.longitude;
-                var geocoder = new google.maps.Geocoder();
-                var latlng = new google.maps.LatLng(lat, long);
-                geocoder.geocode({
-                        'latLng': latlng
-                    },
-                    function(results, status) {
-                        if (status == google.maps.GeocoderStatus.OK) {
-                            if (results[1]) {
-                                self.requestHolder.currentLocation = results[1].formatted_address;
-                            }
-                        }
-                    },
-                    function(err) {
-                        console.info(err);
-                    });
-                return;
+                GeoLocationService.getAddressFromPosition(position).then(function(adress) {
+                    self.requestHolder.currentLocation = results[1].formatted_address;
+                });
             }
 
             self.getLocation = function() {
@@ -82,12 +67,37 @@ angular.module('parisEasy.controllers')
                         //GEOLOC FAILED (Timeout)
                         $rootScope.$broadcast('loading:hide');
                     });
+            };
+
+            self.getPosition = function() {
+                $rootScope.$broadcast('loading:show');
+                GeoLocationService.getPositionFromAddress(self.requestHolder.currentLocation).then(function(position) {
+                    self.requestHolder.position = position;
+                    self.displayPosition(position);
+                    $rootScope.$broadcast('loading:hide');
+                }, function(error){
+                    $rootScope.$broadcast('loading:hide');
+                });
             }
-            
+
             self.search = function() {
-              console.log(self.requestHolder);
-              ParisApiService.setRequestHolder(self.requestHolder);
-              $state.go('main.searchResults');
+                if (!self.requestHolder.position.coords && self.requestHolder.currentLocation == '') {
+                    $ionicLoading.show({
+                        template: 'Merci de saisir une adresse.',
+                        duration: 2000
+                    });
+                    return;
+                } else if (self.requestHolder.currentLocation != '') {
+                    GeoLocationService.getPositionFromAddress(self.requestHolder.currentLocation).then(function(position) {
+                        self.requestHolder.position = position;
+                        ParisApiService.setRequestHolder(self.requestHolder);
+                        $state.go('main.searchResults');
+                    });
+                } else {
+                    ParisApiService.setRequestHolder(self.requestHolder);
+                    $state.go('main.searchResults');
+                }
+
             }
         }
     ]);
