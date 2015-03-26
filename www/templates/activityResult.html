@@ -6,13 +6,31 @@
         <ul class="tags">
             <li ng-repeat="cat in result.rubriques"><i class="icon ion-pound"></i> {{ cat.rubrique }}</li>
         </ul>
-
+        
+        <div class="row">
+            <div class="col col-33">
+                <button class="button button-block button-outline button-positive" ng-click="ctrl.drawRoad('BICYCLING');">
+                    <i class="ion-android-bicycle" style="font-size:190%"></i>
+                </button>
+            </div>
+            <div class="col col-33">
+                <button class="button button-block button-positive button-outline" ng-click="ctrl.drawRoad('DRIVING');">
+                    <i class="ion-model-s" style="font-size:190%"></i>
+                </button>
+            </div>
+            <div class="col col-33">
+                <button class="button button-block button-positive button-outline" ng-click="ctrl.drawRoad('WALKING');">
+                    <i class="ion-android-walk" style="font-size:190%"></i>
+                </button>
+            </div>
+        </div>
+        
         <div class="item item-divider">
             <span ng-bind-html="result.nom"></span>
         </div>
         <p class="item"><i class="icon ion-location"></i>  <span ng-bind-html="result.adresse"> </span>
         </p>
-        <p class="item" ng-bind-html="result.small_description"></p>
+        <p class="item" ng-bind-html="trustAsHtml(result.small_description)"></p>
 
         <div class="item item-divider">
             <span>Partager</span>
@@ -35,30 +53,14 @@
                 </button>
             </div>
         </div>
-        </div>
+
 
 
         <div class="item item-divider">
             <span>Aller à "<span ng-bind-html="result.nom"></span>"</span>
         </div>
 
-        <div class="row">
-            <div class="col col-33">
-                <button class="button button-block button-positive" ng-click="ctrl.drawRoad('BICYCLING');">
-                    <i class="ion-android-bicycle" style="font-size:190%"></i>
-                </button>
-            </div>
-            <div class="col col-33">
-                <button class="button button-block button-positive" ng-click="ctrl.drawRoad('DRIVING');">
-                    <i class="ion-model-s" style="font-size:190%"></i>
-                </button>
-            </div>
-            <div class="col col-33">
-                <button class="button button-block button-positive" ng-click="ctrl.drawRoad('WALKING');">
-                    <i class="ion-android-walk" style="font-size:190%"></i>
-                </button>
-            </div>
-        </div>
+        
 
         <div class="row">
 

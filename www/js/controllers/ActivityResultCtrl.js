@@ -1,6 +1,6 @@
 angular.module('parisEasy.controllers')
-    .controller('ActivityResultCtrl', ['$sanitize', '$ionicScrollDelegate', '$rootScope', '$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', 'GeoLocationService', '$ionicLoading',
-        function($sanitize, $ionicScrollDelegate, $rootScope, $scope, ParisApiService, $stateParams, $interval, InstagramService, GeoLocationService, $ionicLoading) {
+    .controller('ActivityResultCtrl', ['$sce', '$sanitize', '$ionicScrollDelegate', '$rootScope', '$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', 'GeoLocationService', '$ionicLoading',
+        function($sce, $sanitize, $ionicScrollDelegate, $rootScope, $scope, ParisApiService, $stateParams, $interval, InstagramService, GeoLocationService, $ionicLoading) {
             var self = this;
             $scope.result = null;
             $scope.url = "http://filer.paris.fr/";
@@ -18,9 +18,7 @@ angular.module('parisEasy.controllers')
             });
 
             ParisApiService.getActivity($scope.id).then(function(response) {
-
                 $scope.result = response.data[0];
-
                 map_solo.panTo([$scope.result.lat, $scope.result.lon]);
 
                 L.marker([$scope.result.lat, $scope.result.lon]).addTo(map_solo);
@@ -81,7 +79,9 @@ angular.module('parisEasy.controllers')
                     }).addTo(map_solo);
                     map_solo.fitBounds(polyline.getBounds());
                     self.travelSteps = result.routes[0].legs[0].steps;
-                    $ionicScrollDelegate.scrollTop();
+                    $ionicScrollDelegate.scrollTop({
+                        shouldAnimate: true
+                    });
                 });
             }
 
@@ -108,10 +108,11 @@ angular.module('parisEasy.controllers')
                         intent: 'INTENT' // send SMS with the native android SMS messaging
                     }
                 };
+
                 function success() {
-                  
+
                 }
-              
+
                 function error() {
 
                 }
