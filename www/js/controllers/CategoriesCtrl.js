@@ -1,9 +1,9 @@
-angular.module('parisEasy')
-    .controller('CategoriesCtrl', ['$scope', 'ParisApi',
-        function($scope, ParisApi) {
+angular.module('parisEasy.controllers')
+    .controller('CategoriesCtrl', ['$scope', 'ParisApiService',
+        function($scope, ParisApiService) {
             var self = this;
 
-            ParisApi.getCategories().then(function(response) {
+            ParisApiService.getCategories().then(function(response) {
                 self.categories = response.data;
             });
 

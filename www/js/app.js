@@ -1,6 +1,6 @@
-angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.services', 'ngCordova'])
+angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.services', 'ngCordova', 'ngSanitize'])
 
-.run(function($ionicPlatform, $rootScope, $state, $ionicLoading) {
+.run(function($ionicPlatform, $rootScope, $state, $ionicLoading, $sce) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -29,6 +29,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         $ionicLoading.hide()
     });
 
+    $rootScope.trustAsHtml = $sce.trustAsHtml;
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -56,8 +57,17 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     })
+    
+    .state('main.searchActivity', {
+        url: '/searchActivity',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/searchActivity.html',
+                controller: 'SearchActivityCtrl as ctrl'
+            }
+        }
+    })
 
-    // Home 
     .state('main.categories', {
         url: '/categories',
         views: {
@@ -67,27 +77,76 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     })
+    
+     .state('main.equipments', {
+        url: '/equipments',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/equipments.html',
+                controller: 'EquipmentsCtrl as ctrl'
+            }
+        }
+    })
 
-    .state('main.results', {
+    .state('main.activityResults', {
         url: '/results/:cat_id',
         views: {
             'menuContent': {
-                templateUrl: 'templates/results.html',
-                controller: 'ResultsCtrl as ctrl'
+                templateUrl: 'templates/activityResults.html',
+                controller: 'ActivityResultsCtrl as ctrl'
             }
         }
     })
 
-
-    .state('main.result', {
-        url: '/result/:id',
+    .state('main.activityResult', {
+        url: '/activity/:id',
         views: {
             'menuContent': {
-                templateUrl: 'templates/result.html',
-                controller: 'ResultCtrl as ctrl'
+                templateUrl: 'templates/activityResult.html',
+                controller: 'ActivityResultCtrl as ctrl'
             }
         }
     })
+    
+     .state('main.equipmentResult', {
+        url: '/equipment/:id',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/equipmentResult.html',
+                controller: 'EquipmentResultCtrl as ctrl'
+            }
+        }
+    })
+    
+    .state('main.searchActivitiesResults', {
+        url: '/searchActivitiesResults',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/searchActivitiesResults.html',
+                controller: 'SearchActivitiesResultsCtrl as ctrl'
+            }
+        }
+    })
+    
+    .state('main.searchEquipmentsResults', {
+        url: '/searchEquipmentsResults',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/searchEquipmentsResults.html',
+                controller: 'SearchEquipmentsResultsCtrl as ctrl'
+            }
+        }
+    })
+    
+    .state('main.camera', {
+        url: '/camera',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/camera.html',
+                controller: 'CameraCtrl as ctrl'
+            }
+        }
+    });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('main/home');
@@ -107,5 +166,21 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
                 return response
             }
         }
-    })
+    });
+
+    $httpProvider.interceptors.push(function($q, $injector) {
+        return {
+            'responseError': function(rejection) {
+                // do something on error
+                $injector.get("$ionicLoading").show({
+                    template: "Error ... Please retry later.",
+                    duration : 2000
+                });
+                return $q.reject(rejection);
+            }
+        }
+    });
 });
+
+angular.module('parisEasy.controllers', []);
+angular.module('parisEasy.services', []);

@@ -1,21 +1,18 @@
-angular.module('parisEasy')
-    .controller('ResultsCtrl', ['$scope', '$cordovaGeolocation', '$ionicPlatform', 'ParisApi', '$stateParams', '$ionicPopup', 
-        function($scope, $cordovaGeolocation, $ionicPlatform, ParisApi, $stateParams, $ionicPopup) {
+angular.module('parisEasy.controllers')
+    .controller('SearchActivitiesResultsCtrl', ['$scope', 'ParisApiService', '$stateParams', '$state', '$rootScope',
+        function($scope, ParisApiService, $stateParams, $state, $rootScope) {
             var self = this;
+          
             $scope.offset = 0;
-            $scope.url = "http://filer.paris.fr/";
-            self.results = new Array();
-            $scope.cat_id = $stateParams.cat_id;
-            //$scope.content.title = $stateParams.cat_name;
 
-            ParisApi.getActivities($scope.cat_id, '', '', '', '', 0, 10).then(function(response) {
-                console.log(response);
+            ParisApiService.executeRequestHolder().then(function(response) {
                 self.results = response.data;
+                console.log(response);
 
                 // Map
                 L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
-                var map = L.mapbox.map('map')
-                    .setView([48.855584, 2.354613], 11)
+                var map = L.mapbox.map('mapActivities')
+                    .setView([$rootScope.userPosition.coords.latitude, $rootScope.userPosition.coords.longitude], 16)
                     .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
 
                 angular.forEach(self.results, function(value, key) {
@@ -31,12 +28,11 @@ angular.module('parisEasy')
 
                 if($scope.hasResults) {
 
-                    ParisApi.getActivities($scope.cat_id, '', '', '', '', $scope.offset, 10).then(function(response) {
+                     ParisApiService.executeRequestHolder().then(function(response) {
 
                         if(response.data.length == 0) {
                             $scope.$broadcast('scroll.infiniteScrollComplete');
                             $scope.hasResults = false; 
-                            console.info("finished");
                             return;
                         }
 
@@ -48,17 +44,23 @@ angular.module('parisEasy')
                                 self.results.push(response.data[key]);
                                 return;
                             }
-                        });
-
-                        $scope.$broadcast('scroll.infiniteScrollComplete');
-                        console.log(self.results, $scope.offset);
-                    });
-
-                 }   
+                        });     
+                    }); 
+                 }  
 
             };
 
             $scope.okForPaying = true;
+
+            $scope.resultsFilter = function(element) {
+                if(!$scope.okForPaying) {
+                    if(!Boolean(parseInt(element.hasFee))) {
+                        return true; // this will be listed in the results
+                    }
+                    return false;
+                }
+                else return true;
+            };
 
             $scope.filterFunction = function(element) {
               console.info(Boolean(element.hasFee), $scope.okForPaying);
@@ -78,4 +80,4 @@ angular.module('parisEasy')
               };
 
         }
-    ])
+    ]);

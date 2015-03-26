@@ -8,34 +8,24 @@
 
         <div id='map'></div>
 
-        <ion-list>
-          <ion-item class="item-stable"
-                    ng-click="toggleGroup(group)"
-                    ng-class="{active: isGroupShown(group)}">
-              <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
-              Filtres
-          </ion-item>
-          <ion-item class="item item-toggle"
-                    ng-show="isGroupShown(group)">
-            Payants ?
+          <div class="item item-toggle"> Payants ?
             <label class="toggle">
                <input type="checkbox" ng-model='$parent.okForPaying'>
                <div class="track">
                  <div class="handle"></div>
                </div>
             </label>
-          </ion-item>
-      </ion-list>
+          </div>
 
         <div class="item item-divider">
-            <i class="icon ion-location"></i> {{ ctrl.results.length }} résultats | <span ng-if='okForPaying' class="animate-if">with payants</span>
+            <i class="icon ion-location"></i> {{ ctrl.results.length }} résultats <span ng-if='okForPaying' class="animate-if">| €</span>
         </div>        
 
         <div class="list">
 
-          <a ng-click="$state.go('main.result',{id: res.idactivites} )" 
-            ng-repeat="res in ctrl.results " class="item item-thumbnail-left">
-            <img ng-src="{{ url + res.files[0].file }}">
+          <a ui-sref="main.activityResult({id: res.idactivites })"
+            ng-repeat="res in ctrl.results | filter:resultsFilter" class="item item-thumbnail-left">
+            <img ng-if="res.files.length > 0" ng-src="{{ url + res.files[0].file }}">
             <h2 ng-bind-html="res.nom"></h2>
             <p ng-bind-html="res.lieu"></p>
             <ul class="tags_alt">

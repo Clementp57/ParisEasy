@@ -1,6 +1,8 @@
 #map,
 #map_solo,
-#mapHome {
+#mapHome,
+#mapActivities,
+#mapEquipments{
     height: 300px;
     width: 100%;
 }
@@ -22,6 +24,15 @@ ul.tags li {
     border-radius: 20px;
     margin: 5px 0;
 }
+ul.tags_alt li {
+    background: #B5B5B5;
+  padding: 0px 5px;
+  border-radius: 4px;
+  margin-right:6px;
+  color: #fff;
+  font-size: 10px;
+  float: left;
+}
 ul.ig {
     height: 100px;
     width: 2000px;
@@ -37,19 +48,12 @@ ul.ig li img {
 .solo .item {
     white-space: normal;
 }
-
-
-/* Toggle */
-/*.list .item.item-accordion {
-  line-height: 38px;
-  padding-top: 0;
-  padding-bottom: 0;
-  transition: 0.09s all linear;
+p.fee {
+	background: #6CBD77;
+	padding: 0px 5px;
+	border-radius: 4px;
+	margin-right:6px;
+	color: #fff;
+	font-size: 10px;
+	float: left;
 }
-.list .item.item-accordion.ng-hide {
-  line-height: 0px;
-}
-.list .item.item-accordion.ng-hide-add,
-.list .item.item-accordion.ng-hide-remove {
-  display: block !important;
-}*/
