@@ -19,7 +19,9 @@ angular.module('parisEasy.controllers')
                     .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
 
             }, function(error) {
-                $state.go('main.home');
+                setTimeout(function() {
+                    $state.go('main.home');
+                }, 1500);
             });
 
             self.reloadEquipments = function() {

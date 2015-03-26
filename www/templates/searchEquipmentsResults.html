@@ -16,12 +16,12 @@
         <div class="list">
 
             <a ui-sref="main.activityResult({id: res.idactivites })"
-            ng-repeat="res in ctrl.results | filter:resultsFilter" class="item item-thumbnail-left">
+            collection-repeat="res in ctrl.results | filter:resultsFilter" class="item item-thumbnail-left">
             <img ng-src="{{ url + res.files[0].file }}">
             <h2 ng-bind-html="res.nom"></h2>
             <p ng-bind-html="res.lieu"></p>
             <ul class="tags_alt">
-              <li ng-repeat="cat in res.rubriques">{{ cat.rubrique }}</li>
+              <li collection-repeat="cat in res.rubriques">{{ cat.rubrique }}</li>
             </ul>
             <p class='fee' ng-if="res.hasFee == '0'"><i class="icon ion-happy-outline"></i> Gratuit</p>
           </a>

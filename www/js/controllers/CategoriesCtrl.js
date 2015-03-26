@@ -5,8 +5,10 @@ angular.module('parisEasy.controllers')
 
             ParisApiService.getCategories().then(function(response) {
                 self.categories = response.data;
-            },function(error) {
-                $state.go('main.home');
+            }, function(error) {
+                setTimeout(function() {
+                    $state.go('main.home');
+                }, 1500);
             });
 
         }

@@ -1,7 +1,7 @@
 <ion-view view-title="Catégories">
     <ion-content>
         <ul class="list">
-            <li class="item" ng-repeat="cat in ctrl.categories" ng-click="$state.go('main.activityResults',{cat_id: cat.id, cat_name: cat.name} )">
+            <li class="item" collection-repeat="cat in ctrl.categories" ng-click="$state.go('main.activityResults',{cat_id: cat.id, cat_name: cat.name} )">
                 {{ cat.name }}
             </li>
         </ul>

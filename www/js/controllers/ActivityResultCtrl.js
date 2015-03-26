@@ -42,7 +42,9 @@ angular.module('parisEasy.controllers')
                     });
                 });
             }, function(error) {
-                $state.go('main.home');
+                setTimeout(function() {
+                    $state.go('main.home');
+                }, 1500);
             });
 
             self.drawRoad = function(travelMode) {
@@ -55,8 +57,7 @@ angular.module('parisEasy.controllers')
                         L.marker([$rootScope.userPosition.coords.latitude, $rootScope.userPosition.coords.longitude]).addTo(map_solo);
                         $ionicLoading.hide();
                         self.showTravel(travelMode);
-                    }, function(error) {
-                    });
+                    }, function(error) {});
                 } else {
                     L.marker([$rootScope.userPosition.coords.latitude, $rootScope.userPosition.coords.longitude]).addTo(map_solo);
                     self.showTravel(travelMode);
@@ -88,8 +89,8 @@ angular.module('parisEasy.controllers')
                     });
                 }, function(error) {
                     $ionicLoading.show({
-                            template: 'Impossible de calculer l\itinéraire, merci de réessayer.',
-                            duration: 1000
+                        template: 'Impossible de calculer l\itinéraire, merci de réessayer.',
+                        duration: 1000
                     });
                 });
             }
