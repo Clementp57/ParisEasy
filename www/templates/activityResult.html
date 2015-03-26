@@ -8,22 +8,53 @@
         </ul>
 
         <div class="item item-divider">
+            <span ng-bind-html="result.nom"></span>
+        </div>
+        <p class="item"><i class="icon ion-location"></i>  <span ng-bind-html="result.adresse"> </span>
+        </p>
+        <p class="item" ng-bind-html="result.small_description"></p>
+
+        <div class="item item-divider">
+            <span>Partager</span>
+        </div>
+
+        <div class="row">
+            <div class="col col-33">
+                <button class="button button-block button-light" ng-click="ctrl.shareViaEmail();">
+                    <i class="ion-email" style="font-size:200%"></i> 
+                </button>
+            </div>
+            <div class="col col-33">
+                <button class="button button-block button-light" ng-click="ctrl.shareViaSms();">
+                    <i class="ion-android-textsms" style="font-size:200%"></i> 
+                </button>
+            </div>
+            <div class="col col-33">
+                <button class="button button-block button-light" ng-click="ctrl.shareViaEmail();">
+                    <i class="ion-share" style="font-size:200%"></i> 
+                </button>
+            </div>
+        </div>
+        </div>
+
+
+        <div class="item item-divider">
             <span>Aller à "<span ng-bind-html="result.nom"></span>"</span>
         </div>
 
         <div class="row">
             <div class="col col-33">
-                <button class="button button-block button-light" ng-click="ctrl.drawRoad('BICYCLING');">
+                <button class="button button-block button-positive" ng-click="ctrl.drawRoad('BICYCLING');">
                     <i class="ion-android-bicycle" style="font-size:190%"></i>
                 </button>
             </div>
             <div class="col col-33">
-                <button class="button button-block button-light" ng-click="ctrl.drawRoad('DRIVING');">
+                <button class="button button-block button-positive" ng-click="ctrl.drawRoad('DRIVING');">
                     <i class="ion-model-s" style="font-size:190%"></i>
                 </button>
             </div>
             <div class="col col-33">
-                <button class="button button-block button-light" ng-click="ctrl.drawRoad('WALKING');">
+                <button class="button button-block button-positive" ng-click="ctrl.drawRoad('WALKING');">
                     <i class="ion-android-walk" style="font-size:190%"></i>
                 </button>
             </div>
@@ -42,12 +73,6 @@
             </div>
         </div>
 
-        <div class="item item-divider">
-            <span ng-bind-html="result.nom"></span>
-        </div>
-        <p class="item"><i class="icon ion-location"></i>  <span ng-bind-html="result.adresse"> </span>
-        </p>
-        <p class="item" ng-bind-html="result.small_description"></p>
 
         <!-- <figure>
       <img ng-src="{{ result.media[0].path }}" alt="{{ result.media[0].credit }}">
