@@ -1,39 +1,56 @@
-<ion-view view-title="Résultats" >
-  <ion-content>
+<ion-view view-title="Résultats">
+    <ion-content>
 
-      <!-- <ion-refresher
+        <!-- <ion-refresher
         pulling-text="Pull to refresh..."
         on-refresh="doRefresh()">
       </ion-refresher> -->
 
-      <div id='map'></div>
+        <div id='map'></div>
 
-     <!--  <div class="item item-divider">
-         <i class="icon ion-location"></i> {{ ctrl.results.length }} résultats
-      </div> -->
+        <ion-list>
+          <ion-item class="item-stable"
+                    ng-click="toggleGroup(group)"
+                    ng-class="{active: isGroupShown(group)}">
+              <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+              Filtres
+          </ion-item>
+          <ion-item class="item item-toggle"
+                    ng-show="isGroupShown(group)">
+            Payants ?
+            <label class="toggle">
+               <input type="checkbox" ng-model='$parent.okForPaying'>
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+            </label>
+          </ion-item>
+      </ion-list>
 
-      <div class="list">
+        <div class="item item-divider">
+            <i class="icon ion-location"></i> {{ ctrl.results.length }} résultats | <span ng-if='okForPaying' class="animate-if">with payants</span>
+        </div>        
 
-          <a ng-click="$state.go('main.result',{id: res.idactivites} )" ng-repeat="res in ctrl.results" class="item item-thumbnail-left">
+        <div class="list">
+
+          <a ng-click="$state.go('main.result',{id: res.idactivites} )" 
+            ng-repeat="res in ctrl.results " class="item item-thumbnail-left">
             <img ng-src="{{ url + res.files[0].file }}">
             <h2 ng-bind-html="res.nom"></h2>
             <p ng-bind-html="res.lieu"></p>
             <ul class="tags_alt">
               <li ng-repeat="cat in res.rubriques">{{ cat.rubrique }}</li>
             </ul>
-            <p class='fee' ng-if="!res.hasFee"><i class="icon ion-happy-outline"></i> Gratuit</p>
+            <p class='fee' ng-if="res.hasFee == '0'"><i class="icon ion-happy-outline"></i> Gratuit</p>
           </a>
 
-      </div>
+        </div>
 
 
-      <ion-infinite-scroll
-        on-infinite="loadData()"
-        distance="1%"
-        immediate-check="false">
-      </ion-infinite-scroll>
+        <ion-infinite-scroll on-infinite="loadData()" distance="1%" immediate-check="false" ng-if="hasResults">
+        </ion-infinite-scroll>
 
-  </ion-content>
+    </ion-content>
 </ion-view>
 
 

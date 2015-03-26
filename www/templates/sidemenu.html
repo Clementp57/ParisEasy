@@ -18,16 +18,24 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item nav-clear menu-close ng-click="login()">
-          Login
+        <ion-item nav-clear menu-close href="#/main" class="item item-icon-left">
+          <i class="icon ion-home"></i>
+          Accueil
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/search">
-          Search
+        <ion-item nav-clear menu-close href="#/main/categories" class="item item-icon-left">
+           <i class="icon ion-filing"></i>
+          Catégories
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/browse">
+        <ion-item nav-clear menu-close href="#/app/search" class="item item-icon-left">
+           <i class="icon ion-filing"></i>
+          Equipements
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/browse" class="item item-icon-left">
+           <i class="icon ion-filing"></i>
           Browse
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/playlists">
+        <ion-item nav-clear menu-close href="#/app/playlists" class="item item-icon-left">
+           <i class="icon ion-filing"></i>
           Playlists
         </ion-item>
       </ion-list>

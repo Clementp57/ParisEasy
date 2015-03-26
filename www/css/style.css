@@ -1,21 +1,55 @@
-.col {
-/*
-    margin:5px; 
-    padding:30px 10px;
-    box-sizing: border-box;
-    border: 1px solid gray;
-*/
+#map,
+#map_solo,
+#mapHome {
+    height: 300px;
+    width: 100%;
+}
+figure {
+    margin: 0;
+    padding: 0;
+    height: 100px;
+    width: 100%;
+    overflow: hidden;
+}
+ul.tags {
+    position: absolute;
+    top: 30px;
+    right: -15px;
+}
+ul.tags li {
+    background: rgba(255, 255, 255, .9);
+    padding: 5px 30px 5px 15px;
+    border-radius: 20px;
+    margin: 5px 0;
+}
+ul.ig {
+    height: 100px;
+    width: 2000px;
+    overflow: scroll;
+}
+ul.ig li {
+    height: 100px;
+    float: left;
+}
+ul.ig li img {
+    height: 100px;
+}
+.solo .item {
+    white-space: normal;
 }
 
-#map, #map_solo {height:300px; width:100%;}
-figure {margin:0; padding:0; height:100px; width:100%; overflow:hidden;}
-ul.tags {position: absolute; top: 30px; right: -15px;}
-ul.tags li {background: rgba(255,255,255,.9); padding: 5px 30px 5px 15px; border-radius: 20px; margin: 5px 0;}
-ul.tags_alt li {  font-size: 10px; background: #B8B8B8; display: inline-block; padding: 1px 4px; color: #fff; border-radius: 3px; margin-right:5px;}
 
-ul.ig {height:100px; width:2000px;}
-ul.ig div {height:100px; float:left; }
-ul.ig div img {height:100px; }
-
-.solo .item {white-space: normal;}
-.fee {color:rgb(32, 175, 32);   font-size: 12px; margin: 5px 0;}
+/* Toggle */
+/*.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}*/

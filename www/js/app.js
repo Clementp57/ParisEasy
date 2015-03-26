@@ -1,7 +1,7 @@
 angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.services', 'ngCordova'])
 
-.run(function ($ionicPlatform, $rootScope, $state, $ionicLoading) {
-    $ionicPlatform.ready(function () {
+.run(function($ionicPlatform, $rootScope, $state, $ionicLoading) {
+    $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -12,20 +12,26 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             StatusBar.styleDefault();
         }
     });
-    
+
     $rootScope.$state = $state;
-  
+
     $rootScope.$on('loading:show', function() {
-      $ionicLoading.show({template: 'Loading...'})
-    })
+        $ionicLoading.show({
+            content: '<i class="icon ion-loading-c"></i>',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 10
+        });
+    });
 
     $rootScope.$on('loading:hide', function() {
-      $ionicLoading.hide()
-    })
-    
+        $ionicLoading.hide()
+    });
+
 })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -51,6 +57,17 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         }
     })
 
+    // Home 
+    .state('main.categories', {
+        url: '/categories',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/categories.html',
+                controller: 'CategoriesCtrl as ctrl'
+            }
+        }
+    })
+
     .state('main.results', {
         url: '/results/:cat_id',
         views: {
@@ -61,7 +78,8 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         }
     })
 
-     .state('main.result', {
+
+    .state('main.result', {
         url: '/result/:id',
         views: {
             'menuContent': {
@@ -78,16 +96,16 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
 })
 
 .config(function($httpProvider) {
-  $httpProvider.interceptors.push(function($rootScope) {
-    return {
-      request: function(config) {
-        $rootScope.$broadcast('loading:show')
-        return config
-      },
-      response: function(response) {
-        $rootScope.$broadcast('loading:hide')
-        return response
-      }
-    }
-  })
+    $httpProvider.interceptors.push(function($rootScope) {
+        return {
+            request: function(config) {
+                $rootScope.$broadcast('loading:show')
+                return config
+            },
+            response: function(response) {
+                $rootScope.$broadcast('loading:hide')
+                return response
+            }
+        }
+    })
 });
