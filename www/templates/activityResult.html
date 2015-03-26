@@ -7,24 +7,32 @@
             <li ng-repeat="cat in result.rubriques"><i class="icon ion-pound"></i> {{ cat.rubrique }}</li>
         </ul>
         
-        <div class="row">
-            <div class="col col-33">
-                <button class="button button-block button-outline button-positive" ng-click="ctrl.drawRoad('BICYCLING');">
+        <ul class="socialShare">
+          <li>
+            <button class="button button-block button-light button-share" ng-click="ctrl.share();">
+              <i class="ion-share" style="font-size:200%"></i> 
+            </button>
+          </li>
+        </ul>
+        
+
+        <ul class="travelModes">
+            <li>
+                <button class="button button-block button-light" ng-click="ctrl.drawRoad('BICYCLING');">
                     <i class="ion-android-bicycle" style="font-size:190%"></i>
                 </button>
-            </div>
-            <div class="col col-33">
-                <button class="button button-block button-positive button-outline" ng-click="ctrl.drawRoad('DRIVING');">
+            </li>
+            <li>
+                <button class="button button-block button-light" ng-click="ctrl.drawRoad('DRIVING');">
                     <i class="ion-model-s" style="font-size:190%"></i>
                 </button>
-            </div>
-            <div class="col col-33">
-                <button class="button button-block button-positive button-outline" ng-click="ctrl.drawRoad('WALKING');">
+            </li>
+            <li>
+                <button class="button button-block button-light" ng-click="ctrl.drawRoad('WALKING');">
                     <i class="ion-android-walk" style="font-size:190%"></i>
                 </button>
-            </div>
-        </div>
-        
+            </li>
+        </ul>
         <div class="item item-divider">
             <span ng-bind-html="result.nom"></span>
         </div>
@@ -33,39 +41,23 @@
         <p class="item" ng-bind-html="trustAsHtml(result.small_description)"></p>
 
         <div class="item item-divider">
-            <span>Partager</span>
+            <i class="icon ion-camera"></i> Photos instagram à proximité du lieu
         </div>
 
-        <div class="row">
-            <div class="col col-33">
-                <button class="button button-block button-light" ng-click="ctrl.shareViaEmail();">
-                    <i class="ion-email" style="font-size:200%"></i> 
-                </button>
-            </div>
-            <div class="col col-33">
-                <button class="button button-block button-light" ng-click="ctrl.shareViaSms();">
-                    <i class="ion-android-textsms" style="font-size:200%"></i> 
-                </button>
-            </div>
-            <div class="col col-33">
-                <button class="button button-block button-light" ng-click="ctrl.shareViaEmail();">
-                    <i class="ion-share" style="font-size:200%"></i> 
-                </button>
-            </div>
-        </div>
+        <ion-scroll direction="x">
+            <ul class="ig">
+                <li ng-repeat="ig in pics">
+                    <img ng-src="{{ ig.images.low_resolution.url }}">
+                </li>
+            </ul>
+        </ion-scroll>
 
-
-
-        <div class="item item-divider">
+        <div class="item item-divider" ng-show="ctrl.travelSteps.length > 1">
             <span>Aller à "<span ng-bind-html="result.nom"></span>"</span>
         </div>
-
-        
-
-        <div class="row">
-
+        <div class="row" ng-show="ctrl.travelSteps.length > 1">
             <div class="col">
-                <h4 ng-show="ctrl.travelSteps.length > 1">Etapes:</h4>
+                <h4>Etapes:</h4>
                 <ul class="list">
                     <li class="item item-icon-left" ng-repeat="step in ctrl.travelSteps">
                         <i class="icon" ng-class="{'ion-flag': $last, 'ion-compass': !$last, 'ion-flag': $first}"></i>
@@ -80,17 +72,6 @@
       <img ng-src="{{ result.media[0].path }}" alt="{{ result.media[0].credit }}">
     </figure> -->
 
-        <div class="item item-divider">
-            <i class="icon ion-camera"></i> Photos instagram à proximité du lieu
-        </div>
-
-        <ion-scroll direction="x">
-            <ul class="ig">
-                <li ng-repeat="ig in pics">
-                    <img ng-src="{{ ig.images.low_resolution.url }}">
-                </li>
-            </ul>
-        </ion-scroll>
 
         <!-- <p ng-bind-html="result.description"></p> -->
 

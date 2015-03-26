@@ -140,21 +140,10 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
                 controller: 'SearchEquipmentsResultsCtrl as ctrl'
             }
         }
-    })
-
-    .state('main.camera',   {
-        url: '/camera',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/camera.html',
-                controller: 'CameraCtrl as ctrl'
-            }
-        }
     });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('main/home');
-
 
 })
 
@@ -168,20 +157,6 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             response: function(response) {
                 $rootScope.$broadcast('loading:hide')
                 return response
-            }
-        }
-    });
-
-    $httpProvider.interceptors.push(function($q, $injector) {
-        return {
-            'responseError': function(rejection) {
-                // do something on error
-                $injector.get("$ionicLoading").show({
-                    template: "Error ... Please retry later.",
-                    duration: 2000
-                });
-                $injector.get("$state").go('main.home');
-                return $q.reject(rejection);
             }
         }
     });
