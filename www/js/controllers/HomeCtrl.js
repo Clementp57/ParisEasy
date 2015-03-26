@@ -4,22 +4,41 @@ angular.module('parisEasy.controllers')
             var self = this;
             var filterCircle = null;
             var map_home = null;
+            var marker = null;
 
             self.displayMap = false;
             self.requestHolder = {
                 catId: 0,
                 currentLocation: '',
-                radius: 3000,
+                radius: 5000,
                 type: 'activity',
                 position: {}
             };
+
+            document.addEventListener("deviceready", function() {
+                if (navigator.connection && (navigator.connection.type == Connection.NONE || navigator.connection.type == Connection.UNKNOWN)) {
+                    console.log(navigator.connection);
+                    $ionicLoading.show({
+                        template: 'Aucune connexion détectée, merci de vérifier vos paramètres de connexion',
+                        duration: 10000
+                    })
+                }
+            }, false);
 
             //Map initialization
             L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
             map_home = L.mapbox.map('mapHome')
                 .setView([48.855584, 2.354613], 11)
-                .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
-          
+                .addLayer(L.mapbox.tileLayer('examples.h186knp8'), {
+                    zoomControl: false
+                });
+
+            // Disable drag and zoom handlers.
+            map_home.dragging.disable();
+            map_home.touchZoom.disable();
+            map_home.doubleClickZoom.disable();
+            map_home.scrollWheelZoom.disable();
+
             map_home.featureLayer.on('click', function(e) {
                 map_home.panTo(e.layer.getLatLng());
             });
@@ -36,6 +55,13 @@ angular.module('parisEasy.controllers')
             }
 
             self.displayPosition = function(position) {
+                if (marker != null) {
+                    map_home.removeLayer(marker);
+                }
+
+                if (filterCircle != null) {
+                    map_home.removeLayer(filterCircle);
+                }
                 var posOptions = {
                     timeout: 30000,
                     enableHighAccuracy: true,
@@ -43,11 +69,12 @@ angular.module('parisEasy.controllers')
                 };
                 var lat = position.coords.latitude;
                 var long = position.coords.longitude;
-                
-                map_home.panTo([lat, long]);
-                L.marker([lat, long]).addTo(map_home);
 
-                filterCircle = L.circle(L.latLng(lat, long), 3000, {
+                map_home.panTo([lat, long]);
+                marker = L.marker([lat, long])
+                marker.addTo(map_home);
+
+                filterCircle = L.circle(L.latLng(lat, long), 5000, {
                     opacity: 0.4,
                     weight: 1,
                     fillOpacity: 0.4

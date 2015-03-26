@@ -176,6 +176,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
                     template: "Error ... Please retry later.",
                     duration : 2000
                 });
+                $injector.get("$state").go('main.home');
                 return $q.reject(rejection);
             }
         }

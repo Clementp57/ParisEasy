@@ -1,6 +1,6 @@
 angular.module('parisEasy.controllers')
-    .controller('ActivityResultsCtrl', ['$scope', 'ParisApiService', '$stateParams',
-        function($scope, ParisApiService, $stateParams) {
+    .controller('ActivityResultsCtrl', ['$scope', 'ParisApiService', '$stateParams', '$state',
+        function($scope, ParisApiService, $stateParams, $state) {
             var self = this;
             $scope.limit = 10;
             $scope.offset = 0;
@@ -17,7 +17,11 @@ angular.module('parisEasy.controllers')
                 self.results = response.data;
 
                 angular.forEach(self.results, function(value, key) {
-                    L.marker([self.results[key].lat, self.results[key].lon]).addTo(map);
+                    var marker = L.marker([self.results[key].lat, self.results[key].lon]);
+                    marker.addTo(map);
+                    marker.on('click', function(e) {
+                        $state.go('main.activityResult', {id: self.results[key].idactivites});
+                    });
                 });
             });
 

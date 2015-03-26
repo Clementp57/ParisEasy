@@ -1,10 +1,14 @@
 angular.module('parisEasy.controllers')
-    .controller('ActivityResultCtrl', ['$rootScope', '$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', 'GeoLocationService',
-        function($rootScope, $scope, ParisApiService, $stateParams, $interval, InstagramService, GeoLocationService) {
-
+    .controller('ActivityResultCtrl', ['$rootScope', '$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', 'GeoLocationService', '$ionicLoading',
+        function($rootScope, $scope, ParisApiService, $stateParams, $interval, InstagramService, GeoLocationService, $ionicLoading) {
+            var self = this;
             $scope.result = null;
             $scope.url = "http://filer.paris.fr/";
             $scope.id = $stateParams.id;
+
+            self.travelSteps = [];
+
+            var polyline = null;
 
             // Map
             L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
@@ -39,22 +43,32 @@ angular.module('parisEasy.controllers')
                     });
                 });
 
-                if (!$rootScope.userPosition) {
-                    GeoLocationService.getCurrentPosition().then(function(result) {
-                        $rootScope.userPosition = result;
+
+
+                self.drawRoad = function(travelMode) {
+                    if (!$rootScope.userPosition) {
+                        $ionicLoading.show({
+                            template: "Nous calculons votre position..."
+                        });
+                        GeoLocationService.getCurrentPosition().then(function(result) {
+                            $rootScope.userPosition = result;
+                            L.marker([$rootScope.userPosition.coords.latitude, $rootScope.userPosition.coords.longitude]).addTo(map_solo);
+                            $ionicLoading.hide();
+                            self.showTravel(travelMode);
+                        });
+                    } else {
                         L.marker([$rootScope.userPosition.coords.latitude, $rootScope.userPosition.coords.longitude]).addTo(map_solo);
-                        self.drawRoad();
-                    });
-                } else {
-                    self.drawRoad();
+                        self.showTravel(travelMode);
+                    }
                 }
 
-                self.drawRoad = function() {
+                self.showTravel = function(travelMode) {
+                    if (polyline != null) {
+                        map_solo.removeLayer(polyline);
+                    }
                     var start = new google.maps.LatLng($rootScope.userPosition.coords.latitude, $rootScope.userPosition.coords.longitude);
                     var end = new google.maps.LatLng($scope.result.lat, $scope.result.lon);
-                    console.log('Computing .... Start: ', start);
-                    console.log('Computing .... End: ', end);
-                    GeoLocationService.computeRoute(start, end, '').then(function(result) {
+                    GeoLocationService.computeRoute(start, end, travelMode).then(function(result) {
                         console.log('Result: ', result);
 
                         var steps = [];
@@ -63,12 +77,11 @@ angular.module('parisEasy.controllers')
                                 point.k,
                                 point.D));
                         });
-                        var polyline = L.polyline(steps, {
+                        polyline = L.polyline(steps, {
                             color: 'red'
                         }).addTo(map_solo);
                         map_solo.fitBounds(polyline.getBounds());
-
-                        console.log('steps -> ' + steps);
+                        self.travelSteps = result.routes[0].legs[0].steps;
                     });
                 }
 

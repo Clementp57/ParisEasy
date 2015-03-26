@@ -88,11 +88,12 @@ angular.module('parisEasy.services')
                 computeRoute: function(startPosition, endPosition, travelMode) {
                     var directionsService = new google.maps.DirectionsService();
                     var deferred = $q.defer();
+                    var mode = google.maps.TravelMode[travelMode];
 
                     var request = {
                         origin: startPosition,
                         destination: endPosition,
-                        travelMode: google.maps.TravelMode.DRIVING
+                        travelMode: mode
                     };
                     directionsService.route(request, function(result, status) {
                         if (status == google.maps.DirectionsStatus.OK) {

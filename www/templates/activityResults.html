@@ -13,13 +13,11 @@
         </div>
 
         <div class="list">
-
             <a ui-sref="main.activityResult({id: res.idactivites })" ng-repeat="res in ctrl.results" class="item item-thumbnail-left">
                 <img ng-src="{{ url + res.files[0].file }}">
                 <h2 ng-bind-html="res.nom"></h2>
                 <p ng-bind-html="res.lieu"></p>
             </a>
-
         </div>
 
 
