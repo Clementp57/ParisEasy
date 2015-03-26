@@ -4,14 +4,31 @@
             <i class="icon ion-location"></i> {{ ctrl.results.length }} résultats
         </div>
 
+        <div class="item item-toggle"> Payants ?
+            <label class="toggle">
+               <input type="checkbox" ng-model='$parent.okForPaying'>
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+            </label>
+          </div>
+
         <div class="list">
-            <a ui-sref="main.equipmentResult({id: res.id })" ng-repeat="res in ctrl.results" class="item">
-                <h2 ng-bind-html="res.name"></h2>
-                <p ng-bind-html="res.address"></p>
-            </a>
+
+            <a ui-sref="main.activityResult({id: res.idactivites })"
+            ng-repeat="res in ctrl.results | filter:resultsFilter" class="item item-thumbnail-left">
+            <img ng-src="{{ url + res.files[0].file }}">
+            <h2 ng-bind-html="res.nom"></h2>
+            <p ng-bind-html="res.lieu"></p>
+            <ul class="tags_alt">
+              <li ng-repeat="cat in res.rubriques">{{ cat.rubrique }}</li>
+            </ul>
+            <p class='fee' ng-if="res.hasFee == '0'"><i class="icon ion-happy-outline"></i> Gratuit</p>
+          </a>
+
         </div>
 
-        <ion-infinite-scroll on-infinite="loadData()" distance="1%" immediate-check="false">
+        <ion-infinite-scroll on-infinite="loadData()" distance="1%" immediate-check="false" ng-if="hasResults">
         </ion-infinite-scroll>
 
     </ion-content>

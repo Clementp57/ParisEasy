@@ -17,6 +17,7 @@
   "cordovaPlugins": [
     "org.apache.cordova.camera",
     "org.apache.cordova.network-information",
-    "org.apache.cordova.statusbar"
+    "org.apache.cordova.statusbar",
+    "org.apache.cordova.geolocation"
   ]
 }

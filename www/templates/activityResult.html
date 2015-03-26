@@ -30,18 +30,23 @@
         </div>
 
         <div class="row">
+
             <div class="col">
+                <h4 ng-show="ctrl.travelSteps.length > 1">Etapes:</h4>
                 <ul class="list">
-                    <li class="item" ng-repeat="step in ctrl.travelSteps">
+                    <li class="item item-icon-left" ng-repeat="step in ctrl.travelSteps">
+                        <i class="icon" ng-class="{'ion-flag': $last, 'ion-compass': !$last, 'ion-flag': $first}"></i>
                         <span ng-bind-html="step.instructions"></span>
                     </li>
                 </ul>
-            </div>  
+            </div>
         </div>
 
         <div class="item item-divider">
             <span ng-bind-html="result.nom"></span>
         </div>
+        <p class="item"><i class="icon ion-location"></i>  <span ng-bind-html="result.adresse"> </span>
+        </p>
         <p class="item" ng-bind-html="result.small_description"></p>
 
         <!-- <figure>
@@ -49,13 +54,16 @@
     </figure> -->
 
         <div class="item item-divider">
-            Photos instagram à proximité du lieu
+            <i class="icon ion-camera"></i> Photos instagram à proximité du lieu
         </div>
-        <ul class="ig">
-            <li ng-repeat="ig in pics">
-                <img ng-src="{{ ig.images.low_resolution.url }}">
-            </li>
-        </ul>
+
+        <ion-scroll direction="x">
+            <ul class="ig">
+                <li ng-repeat="ig in pics">
+                    <img ng-src="{{ ig.images.low_resolution.url }}">
+                </li>
+            </ul>
+        </ion-scroll>
 
         <!-- <p ng-bind-html="result.description"></p> -->
 

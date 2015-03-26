@@ -24,6 +24,15 @@ ul.tags li {
     border-radius: 20px;
     margin: 5px 0;
 }
+ul.tags_alt li {
+    background: #B5B5B5;
+  padding: 0px 5px;
+  border-radius: 4px;
+  margin-right:6px;
+  color: #fff;
+  font-size: 10px;
+  float: left;
+}
 ul.ig {
     height: 100px;
     width: 2000px;
@@ -38,4 +47,13 @@ ul.ig li img {
 }
 .solo .item {
     white-space: normal;
+}
+p.fee {
+	background: #6CBD77;
+	padding: 0px 5px;
+	border-radius: 4px;
+	margin-right:6px;
+	color: #fff;
+	font-size: 10px;
+	float: left;
 }

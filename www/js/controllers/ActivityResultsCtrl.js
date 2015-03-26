@@ -1,6 +1,7 @@
 angular.module('parisEasy.controllers')
     .controller('ActivityResultsCtrl', ['$scope', 'ParisApiService', '$stateParams', '$state',
         function($scope, ParisApiService, $stateParams, $state) {
+
             var self = this;
             $scope.limit = 10;
             $scope.offset = 0;
@@ -20,25 +21,55 @@ angular.module('parisEasy.controllers')
                     var marker = L.marker([self.results[key].lat, self.results[key].lon]);
                     marker.addTo(map);
                     marker.on('click', function(e) {
-                        $state.go('main.activityResult', {id: self.results[key].idactivites});
+                        $state.go('main.activityResult', {
+                            id: self.results[key].idactivites
+                        });
                     });
                 });
             });
 
+            $scope.hasResults = true;
+
             $scope.loadData = function() {
 
-                $scope.limit += 10;
+                console.info("loading data");
+
                 $scope.offset += 10
 
-                ParisApiService.getActivities($scope.cat_id, '', '', '', '', $scope.offset, $scope.limit).then(function(response) {
+                if ($scope.hasResults) {
 
-                    angular.forEach(self.results, function(value, key) {
-                        self.results.push(response.data[key]);
+                    ParisApiService.getActivities($scope.cat_id, '', '', '', '', $scope.offset, 10).then(function(response) {
+
+                        if (response.data.length == 0) {
+                            $scope.$broadcast('scroll.infiniteScrollComplete');
+                            $scope.hasResults = false;
+                            return;
+                        }
+
+                        console.log(response);
+
+                        angular.forEach(self.results, function(value, key) {
+                            if (response.data[key] != undefined) {
+                                console.log("+1");
+                                self.results.push(response.data[key]);
+                                return;
+                            }
+                        });
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
                     });
+                }
 
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                });
+            };
 
+            $scope.okForPaying = true;
+
+            $scope.resultsFilter = function(element) {
+                if (!$scope.okForPaying) {
+                    if (!Boolean(parseInt(element.hasFee))) {
+                        return true; // this will be listed in the results
+                    }
+                    return false;
+                } else return true;
             };
 
         }

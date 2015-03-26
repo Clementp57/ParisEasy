@@ -1,9 +1,8 @@
 angular.module('parisEasy.controllers')
-    .controller('SearchActivitiesResultsCtrl', ['$scope', 'ParisApiService', '$stateParams', '$state',
-        function($scope, ParisApiService, $stateParams, $state) {
+    .controller('SearchActivitiesResultsCtrl', ['$scope', 'ParisApiService', '$stateParams', '$state', '$rootScope',
+        function($scope, ParisApiService, $stateParams, $state, $rootScope) {
             var self = this;
           
-            $scope.limit = 10;
             $scope.offset = 0;
 
             ParisApiService.executeRequestHolder().then(function(response) {
@@ -13,7 +12,7 @@ angular.module('parisEasy.controllers')
                 // Map
                 L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
                 var map = L.mapbox.map('mapActivities')
-                    .setView([48.855584, 2.354613], 11)
+                    .setView([$rootScope.userPosition.coords.latitude, $rootScope.userPosition.coords.longitude], 16)
                     .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
 
                 angular.forEach(self.results, function(value, key) {
@@ -21,22 +20,64 @@ angular.module('parisEasy.controllers')
                 });
             });
 
+            $scope.hasResults = true;
+
             $scope.loadData = function() {
 
-                $scope.limit += 10;
                 $scope.offset += 10
 
-                ParisApiService.executeRequestHolder().then(function(response) {
+                if($scope.hasResults) {
 
-                    angular.forEach(self.results, function(value, key) {
-                        self.results.push(response.data[key]);
-                    });
+                     ParisApiService.executeRequestHolder().then(function(response) {
 
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                });
+                        if(response.data.length == 0) {
+                            $scope.$broadcast('scroll.infiniteScrollComplete');
+                            $scope.hasResults = false; 
+                            return;
+                        }
+
+                        console.log(response);
+
+                        angular.forEach(self.results, function(value, key) {
+                            if(response.data[key] != undefined) {
+                                console.log("+1");
+                                self.results.push(response.data[key]);
+                                return;
+                            }
+                        });     
+                    }); 
+                 }  
 
             };
 
+            $scope.okForPaying = true;
+
+            $scope.resultsFilter = function(element) {
+                if(!$scope.okForPaying) {
+                    if(!Boolean(parseInt(element.hasFee))) {
+                        return true; // this will be listed in the results
+                    }
+                    return false;
+                }
+                else return true;
+            };
+
+            $scope.filterFunction = function(element) {
+              console.info(Boolean(element.hasFee), $scope.okForPaying);
+              return $scope.okForPaying = Boolean(parseInt(element.hasFee));
+            };
+
+            // Toggle list
+            $scope.toggleGroup = function(group) {
+                if ($scope.isGroupShown(group)) {
+                  $scope.shownGroup = null;
+                } else {
+                  $scope.shownGroup = group;
+                }
+              };
+              $scope.isGroupShown = function(group) {
+                return $scope.shownGroup === group;
+              };
 
         }
     ]);
