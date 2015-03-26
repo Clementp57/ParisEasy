@@ -1,6 +1,6 @@
 angular.module('parisEasy.controllers')
-    .controller('EquipmentsCtrl', ['$scope', 'ParisApiService',
-        function($scope, ParisApiService) {
+    .controller('EquipmentsCtrl', ['$scope', 'ParisApiService', '$state',
+        function($scope, ParisApiService, $state) {
             var self = this;
             self.category = 0;
             var map = null;
@@ -18,6 +18,8 @@ angular.module('parisEasy.controllers')
                 map.setView([48.855584, 2.354613], 11)
                     .addLayer(L.mapbox.tileLayer('examples.h186knp8'));
 
+            }, function(error) {
+                $state.go('main.home');
             });
 
             self.reloadEquipments = function() {

@@ -1,6 +1,6 @@
 angular.module('parisEasy.controllers')
-    .controller('EquipmentResultCtrl', ['$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService',
-        function($scope, ParisApiService, $stateParams, $interval, InstagramService) {
+    .controller('EquipmentResultCtrl', ['$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', '$state',
+        function($scope, ParisApiService, $stateParams, $interval, InstagramService, $state) {
 
             $scope.result = null;
             $scope.id = $stateParams.id;
@@ -43,6 +43,8 @@ angular.module('parisEasy.controllers')
 
 
 
+            }, function(error) {
+                $state.go('main.home');
             });
 
         }

@@ -26,6 +26,8 @@ angular.module('parisEasy.controllers')
                         });
                     });
                 });
+            },function(error) {
+                $state.go('main.home');
             });
 
             $scope.hasResults = true;

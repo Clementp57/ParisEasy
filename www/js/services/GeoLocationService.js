@@ -23,6 +23,13 @@ angular.module('parisEasy.services')
                                 console.log('error', error);
                             });
 
+                    }, function(error) {
+                        $ionicLoading.show({
+                            template: 'Impossible de vous localiser, merci de réessayer.',
+                            duration: 1500
+                        });
+                        deferred.reject();
+
                     });
 
                     return deferred.promise;
@@ -55,6 +62,10 @@ angular.module('parisEasy.services')
                             }
                         },
                         function(err) {
+                            $ionicLoading.show({
+                                template: 'Impossible de localiser cette adresse, merci de vérifier puis de réessayer.',
+                                duration: 1500
+                            });
                             deferred.reject();
                         });
 
@@ -79,7 +90,6 @@ angular.module('parisEasy.services')
                             }
                         },
                         function(err) {
-                            console.info(err);
                             deferred.reject();
                         });
 
@@ -99,6 +109,8 @@ angular.module('parisEasy.services')
                         if (status == google.maps.DirectionsStatus.OK) {
                             deferred.resolve(result);
                         }
+                    }, function(error) {
+                        deferred.reject();
                     });
 
                     return deferred.promise;

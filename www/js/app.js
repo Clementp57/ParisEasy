@@ -148,6 +148,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
 })
 
 .config(function($httpProvider) {
+    $httpProvider.defaults.timeout = 10000;
     $httpProvider.interceptors.push(function($rootScope) {
         return {
             request: function(config) {
@@ -161,6 +162,8 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         }
     });
 });
+    
+
 
 angular.module('parisEasy.controllers', []);
 angular.module('parisEasy.services', []);

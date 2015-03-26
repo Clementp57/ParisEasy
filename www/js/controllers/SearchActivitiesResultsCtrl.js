@@ -18,6 +18,10 @@ angular.module('parisEasy.controllers')
                 angular.forEach(self.results, function(value, key) {
                     L.marker([self.results[key].lat, self.results[key].lon]).addTo(map);
                 });
+            }, function() {
+                setTimeout(function(){
+                    $state.go('main.home');
+                }, 2000);
             });
 
             $scope.hasResults = true;

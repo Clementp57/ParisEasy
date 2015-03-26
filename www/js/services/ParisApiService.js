@@ -1,6 +1,6 @@
 angular.module('parisEasy.services')
-    .factory('ParisApiService', ['$q', '$http',
-        function($q, $http) {
+    .factory('ParisApiService', ['$q', '$http', '$ionicLoading',
+        function($q, $http, $ionicLoading) {
             var token = "71b7030923bc73e5b897a2dc28653d4a40a7cec3533994868eeb43c2ebce899a";
             var baseUrl = "http://api.paris.fr/api/data/1.0/";
             var baseUrl_11 = "http://api.paris.fr/api/data/1.1/";
@@ -20,7 +20,11 @@ angular.module('parisEasy.services')
                             return response.data;
                         },
                         function() {
-                            //$rootScope.notify('La connexion avec le serveur à échouée. Essayez de recharger la page.','error')
+                            $ionicLoading.show({
+                                template: "La connexion au serveur de données a échouée. Merci de réessayer.",
+                                duration: 2500
+                            });
+                            deferred.reject();
                         });
 
                     return deferred.promise;
@@ -41,7 +45,11 @@ angular.module('parisEasy.services')
                             return response.data;
                         },
                         function() {
-                            //$rootScope.notify('La connexion avec le serveur à échouée. Essayez de recharger la page.','error')
+                            $ionicLoading.show({
+                                template: "La connexion au serveur de données a échouée. Merci de réessayer.",
+                                duration: 2500
+                            });
+                            deferred.reject();
                         });
 
                     return deferred.promise;
@@ -67,7 +75,11 @@ angular.module('parisEasy.services')
                             return response.data;
                         },
                         function() {
-                            //$rootScope.notify('La connexion avec le serveur à échouée. Essayez de recharger la page.','error')
+                            $ionicLoading.show({
+                                template: "La connexion au serveur de données a échouée. Merci de réessayer.",
+                                duration: 2500
+                            });
+                            deferred.reject();
                         });
 
                     return deferred.promise;
@@ -86,7 +98,11 @@ angular.module('parisEasy.services')
                             return response.data;
                         },
                         function() {
-                            //$rootScope.notify('La connexion avec le serveur à échouée. Essayez de recharger la page.','error')
+                            $ionicLoading.show({
+                                template: "La connexion au serveur de données a échouée. Merci de réessayer.",
+                                duration: 2500
+                            });
+                            deferred.reject();
                         });
 
                     return deferred.promise;
@@ -105,7 +121,11 @@ angular.module('parisEasy.services')
                             return response.data;
                         },
                         function() {
-                            //$rootScope.notify('La connexion avec le serveur à échouée. Essayez de recharger la page.','error')
+                            $ionicLoading.show({
+                                template: "La connexion au serveur de données a échouée. Merci de réessayer.",
+                                duration: 2500
+                            });
+                            deferred.reject();
                         });
 
                     return deferred.promise;
@@ -132,7 +152,11 @@ angular.module('parisEasy.services')
                             return response.data;
                         },
                         function() {
-                            //$rootScope.notify('La connexion avec le serveur à échouée. Essayez de recharger la page.','error')
+                            $ionicLoading.show({
+                                template: "La connexion au serveur de données a échouée. Merci de réessayer.",
+                                duration: 2500
+                            });
+                            deferred.reject();
                         });
 
                     return deferred.promise;
@@ -155,7 +179,11 @@ angular.module('parisEasy.services')
                             return response.data;
                         },
                         function() {
-                            //$rootScope.notify('La connexion avec le serveur à échouée. Essayez de recharger la page.','error')
+                            $ionicLoading.show({
+                                template: "La connexion au serveur de données a échouée. Merci de réessayer.",
+                                duration: 2500
+                            });
+                            deferred.reject();
                         });
 
                     return deferred.promise;
@@ -190,7 +218,7 @@ angular.module('parisEasy.services')
                                 10
                             );
                             break;
-                        
+
                         case 'searchActivity':
                             return this.searchActivity(
                                 requestHolder.catId,
