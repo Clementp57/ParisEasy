@@ -105,7 +105,11 @@ angular.module('parisEasy.controllers')
                 var title = $rootScope.trustAsHtml($scope.result.nom);
                 var description = $rootScope.trustAsHtml($scope.result.small_description);
                 var imgUrl = $scope.result.media[0].path;
-                window.plugins.socialsharing.share(title, null, imgUrl, null);
+                try {
+                  window.plugins.socialsharing.share(title, null, imgUrl, null); 
+                } catch(error) {
+                  alert('error');
+                }
             }
 
 
