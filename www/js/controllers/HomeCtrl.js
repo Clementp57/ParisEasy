@@ -1,6 +1,7 @@
 angular.module('parisEasy.controllers')
     .controller('HomeCtrl', ['$scope', 'ParisApiService', '$state', '$rootScope', 'GeoLocationService', '$ionicLoading', '$ionicScrollDelegate',
         function($scope, ParisApiService, $state, $rootScope, GeoLocationService, $ionicLoading, $ionicScrollDelegate) {
+
             var self = this;
             var filterCircle = null;
             var map_home = null;
@@ -47,6 +48,12 @@ angular.module('parisEasy.controllers')
             ParisApiService.getCategories().then(function(response) {
                 self.categories = response.data;
             });
+
+            // Featured Activities
+            ParisApiService.getActivities(15, '', '', '', '', 0, 10).then(function(response) {
+                console.log(response.data);
+                self.comique = response.data;
+            }); 
 
             self.updateFilterCircle = function() {
                 if (filterCircle) {

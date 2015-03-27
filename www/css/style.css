@@ -26,16 +26,17 @@ ul.tags li {
 }
 ul.tags_alt li {
     background: #B5B5B5;
-    padding: 0px 5px;
-    border-radius: 4px;
-    margin-right: 6px;
-    color: #fff;
-    font-size: 10px;
-    float: left;
+  padding: 0px 5px;
+  border-radius: 4px;
+  margin-right:6px;
+  color: #fff;
+  font-size: 10px;
+  float: left;
+  margin-bottom:6px;
 }
 ul.ig {
     height: 100px;
-    width: 2000px;
+    width: 1400px;
     overflow: scroll;
 }
 ul.ig li {
@@ -54,13 +55,14 @@ ul.travelModes {
     left: 10px;
 }
 p.fee {
-    background: #6CBD77;
-    padding: 0px 5px;
-    border-radius: 4px;
-    margin-right: 6px;
-    color: #fff;
-    font-size: 10px;
-    float: left;
+	background: #6CBD77;
+	padding: 0px 5px;
+	border-radius: 4px;
+	margin-right:6px;
+	color: #fff;
+	font-size: 10px;
+	float: left;
+  margin-bottom:6px;
 }
 ul.socialShare {
     position: absolute;
