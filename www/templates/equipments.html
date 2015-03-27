@@ -6,7 +6,7 @@
                     Catégorie :
                 </div>
                 <select ng-model="ctrl.category" ng-change="ctrl.reloadEquipments()">
-                    <option collection-repeat="cat in ctrl.categories" value="{{cat.id}}">{{ cat.name }}</option>
+                    <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}">{{ cat.name }}</option>
                 </select>
             </label>
         </div>
@@ -21,7 +21,7 @@
         
 
         <ul class="list">
-            <li class="item" collection-repeat="eq in ctrl.equipments" ng-click="$state.go('main.equipmentResult',{id: eq.id} )">
+            <li class="item" ng-repeat="eq in ctrl.equipments" ng-click="$state.go('main.equipmentResult',{id: eq.id} )">
                 {{ eq.name }}
             </li>
         </ul>
