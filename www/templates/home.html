@@ -1,35 +1,37 @@
 <ion-view view-title="Recherche Géolocalisée" left-buttons="leftButtons">
     <ion-content class="padding" has-header="true">
 
+        <h4>Trouver une activité</h4>
         <div class="list list-inset">
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
-                  
                     <i class="icon ion-map placeholder-icon"></i>
                     <input type="text" placeholder="Lieu, Adresse" ng-model="ctrl.requestHolder.currentLocation">
                 </label>
+                <button ng-click="ctrl.getLocation()" class="button button-energized button-small button-positive">
+                    <i class="icon ion-android-locate"></i>
+                </button>
                 <button class="button button-small button-positive" ng-click="ctrl.getPosition()">
-                    Localiser
+                    OK
                 </button>
             </div>
 
-            <label class="item item-input item-select">
-                <div class="input-label">
+            <label class="item item-input item-select" ng-show="ctrl.displayMap">
+                <div class="input-label" >
                     Catégorie
                 </div>
                 <select ng-model="ctrl.requestHolder.catId">
                     <option ng-repeat="cat in ctrl.categories" value="{{cat.id}}">{{ cat.name }}</option>
                 </select>
             </label>
+            <div class="item" id='mapHome' ng-show="ctrl.displayMap"></div>
+            <div class="range item range-positive" ng-show="ctrl.displayMap"> 
+                Rayon
+                <input type="range" name="radius" min="100" max="5000" ng-model="ctrl.requestHolder.radius" ng-change="ctrl.updateFilterCircle()">{{ctrl.requestHolder.radius}} m
+            </div>
         </div>
-        <div class="card" id='mapHome' ng-show="ctrl.displayMap"></div>
-
-        <div class="range range-positive">
-            Rayon
-            <input type="range" name="radius" min="100" max="5000" ng-model="ctrl.requestHolder.radius" ng-change="ctrl.updateFilterCircle()">{{ctrl.requestHolder.radius}} m
-        </div>
-
-        <div class="list">
+        
+        <div class="list" ng-show="ctrl.displayMap">
             <label class="item item-radio">
                 <input type="radio" name="type" ng-model="ctrl.requestHolder.type" ng-value="'equipment'">
                 <div class="item-content">
@@ -46,17 +48,18 @@
             </label>
         </div>
 
-        <div class="row">
-            <div class="col col-50">
+        <div class="row" ng-show="ctrl.displayMap">
+            <!-- <div class="col col-50">
                 <button ng-click="ctrl.getLocation()" class="button button-energized button-block button-outline">
                     <i class="icon ion-android-locate"></i> Me localiser
                 </button>
-            </div>
-            <div class="col col-50">
+            </div> -->
+            <div class="col">
                 <button class="button button-positive button-block button-outline" ng-click="ctrl.search()">
                     <i class="icon ion-search"></i> Rechercher
                 </button>
             </div>
+
         </div>
 
     </ion-content>

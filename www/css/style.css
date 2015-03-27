@@ -32,10 +32,11 @@ ul.tags_alt li {
   color: #fff;
   font-size: 10px;
   float: left;
+  margin-bottom:6px;
 }
 ul.ig {
     height: 100px;
-    width: 2000px;
+    width: 1400px;
     overflow: scroll;
 }
 ul.ig li {
@@ -56,4 +57,5 @@ p.fee {
 	color: #fff;
 	font-size: 10px;
 	float: left;
+  margin-bottom:6px;
 }
