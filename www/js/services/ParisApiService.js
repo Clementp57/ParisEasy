@@ -181,7 +181,7 @@ angular.module('parisEasy.services')
                         function() {
                             $ionicLoading.show({
                                 template: "La connexion au serveur de données a échouée. Merci de réessayer.",
-                                duration: 2500
+                                duration: 1500
                             });
                             deferred.reject();
                         });

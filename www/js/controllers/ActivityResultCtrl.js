@@ -20,7 +20,13 @@ angular.module('parisEasy.controllers')
             ParisApiService.getActivity($scope.id).then(function(response) {
                 $scope.result = response.data[0];
                 console.log($scope.result);
-                map_solo.panTo([$scope.result.lat, $scope.result.lon]);
+
+                try {
+                    map_solo.panTo([$scope.result.lat, $scope.result.lon]);
+                } catch (error) {
+                    console.log('failed to pan map...');
+                }
+
 
                 L.marker([$scope.result.lat, $scope.result.lon]).addTo(map_solo);
 
