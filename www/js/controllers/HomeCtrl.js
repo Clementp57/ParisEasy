@@ -76,8 +76,13 @@ angular.module('parisEasy.controllers')
                 };
                 var lat = position.coords.latitude;
                 var long = position.coords.longitude;
-
-                map_home.panTo([lat, long]);
+                
+                try {
+                  map_home.panTo([lat, long]);
+                } catch(exception) {
+                  console.log('error while tryin to pan map',lat,long);
+                }
+                
                 marker = L.marker([lat, long])
                 marker.addTo(map_home);
 

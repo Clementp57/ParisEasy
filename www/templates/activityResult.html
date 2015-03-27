@@ -6,77 +6,39 @@
         <ul class="tags">
             <li ng-repeat="cat in result.rubriques"><i class="icon ion-pound"></i> {{ cat.rubrique }}</li>
         </ul>
+        
+        <ul class="socialShare">
+          <li>
+            <button class="button button-block button-light button-share" ng-click="ctrl.share();">
+              <i class="ion-share" style="font-size:200%"></i> 
+            </button>
+          </li>
+        </ul>
+        
 
+        <ul class="travelModes">
+            <li>
+                <button class="button button-block button-light" ng-click="ctrl.drawRoad('BICYCLING');">
+                    <i class="ion-android-bicycle" style="font-size:190%"></i>
+                </button>
+            </li>
+            <li>
+                <button class="button button-block button-light" ng-click="ctrl.drawRoad('DRIVING');">
+                    <i class="ion-model-s" style="font-size:190%"></i>
+                </button>
+            </li>
+            <li>
+                <button class="button button-block button-light" ng-click="ctrl.drawRoad('WALKING');">
+                    <i class="ion-android-walk" style="font-size:190%"></i>
+                </button>
+            </li>
+        </ul>
         <div class="item item-divider">
             <span ng-bind-html="result.nom"></span>
         </div>
         <p class="item"><i class="icon ion-location"></i>  <span ng-bind-html="result.adresse"> </span>
         </p>
-        <p class="item" ng-bind-html="result.small_description"></p>
-
-        <div class="item item-divider">
-            <span>Partager</span>
-        </div>
-
-        <div class="row">
-            <div class="col col-33">
-                <button class="button button-block button-light" ng-click="ctrl.shareViaEmail();">
-                    <i class="ion-email" style="font-size:200%"></i> 
-                </button>
-            </div>
-            <div class="col col-33">
-                <button class="button button-block button-light" ng-click="ctrl.shareViaSms();">
-                    <i class="ion-android-textsms" style="font-size:200%"></i> 
-                </button>
-            </div>
-            <div class="col col-33">
-                <button class="button button-block button-light" ng-click="ctrl.shareViaEmail();">
-                    <i class="ion-share" style="font-size:200%"></i> 
-                </button>
-            </div>
-        </div>
-        </div>
-
-
-        <div class="item item-divider">
-            <span>Aller à "<span ng-bind-html="result.nom"></span>"</span>
-        </div>
-
-        <div class="row">
-            <div class="col col-33">
-                <button class="button button-block button-positive" ng-click="ctrl.drawRoad('BICYCLING');">
-                    <i class="ion-android-bicycle" style="font-size:190%"></i>
-                </button>
-            </div>
-            <div class="col col-33">
-                <button class="button button-block button-positive" ng-click="ctrl.drawRoad('DRIVING');">
-                    <i class="ion-model-s" style="font-size:190%"></i>
-                </button>
-            </div>
-            <div class="col col-33">
-                <button class="button button-block button-positive" ng-click="ctrl.drawRoad('WALKING');">
-                    <i class="ion-android-walk" style="font-size:190%"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="row">
-
-            <div class="col">
-                <h4 ng-show="ctrl.travelSteps.length > 1">Etapes:</h4>
-                <ul class="list">
-                    <li class="item item-icon-left" ng-repeat="step in ctrl.travelSteps">
-                        <i class="icon" ng-class="{'ion-flag': $last, 'ion-compass': !$last, 'ion-flag': $first}"></i>
-                        <span ng-bind-html="step.instructions"></span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-
-        <!-- <figure>
-      <img ng-src="{{ result.media[0].path }}" alt="{{ result.media[0].credit }}">
-    </figure> -->
+        <p class="item" ng-bind-html="trustAsHtml(result.small_description)"></p>
 
         <div class="item item-divider">
             <i class="icon ion-camera"></i> Photos instagram à proximité du lieu
@@ -89,6 +51,27 @@
                 </li>
             </ul>
         </ion-scroll>
+
+        <div class="item item-divider" ng-show="ctrl.travelSteps.length > 1">
+            <span>Aller à "<span ng-bind-html="result.nom"></span>"</span>
+        </div>
+        <div class="row" ng-show="ctrl.travelSteps.length > 1">
+            <div class="col">
+                <h4>Etapes:</h4>
+                <ul class="list">
+                    <li class="item item-icon-left" collection-repeat="step in ctrl.travelSteps">
+                        <i class="icon" ng-class="{'ion-flag': $last, 'ion-compass': !$last, 'ion-flag': $first}"></i>
+                        <span ng-bind-html="step.instructions"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- <figure>
+      <img ng-src="{{ result.media[0].path }}" alt="{{ result.media[0].credit }}">
+    </figure> -->
+
 
         <!-- <p ng-bind-html="result.description"></p> -->
 

@@ -1,6 +1,6 @@
 angular.module('parisEasy.controllers')
-    .controller('ActivityResultCtrl', ['$sanitize', '$ionicScrollDelegate', '$rootScope', '$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', 'GeoLocationService', '$ionicLoading',
-        function($sanitize, $ionicScrollDelegate, $rootScope, $scope, ParisApiService, $stateParams, $interval, InstagramService, GeoLocationService, $ionicLoading) {
+    .controller('ActivityResultCtrl', ['$state', '$sanitize', '$ionicScrollDelegate', '$rootScope', '$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', 'GeoLocationService', '$ionicLoading',
+        function($state, $sanitize, $ionicScrollDelegate, $rootScope, $scope, ParisApiService, $stateParams, $interval, InstagramService, GeoLocationService, $ionicLoading) {
             var self = this;
             $scope.result = null;
             $scope.url = "http://filer.paris.fr/";
@@ -18,9 +18,8 @@ angular.module('parisEasy.controllers')
             });
 
             ParisApiService.getActivity($scope.id).then(function(response) {
-
                 $scope.result = response.data[0];
-
+                console.log($scope.result);
                 map_solo.panTo([$scope.result.lat, $scope.result.lon]);
 
                 L.marker([$scope.result.lat, $scope.result.lon]).addTo(map_solo);
@@ -42,6 +41,10 @@ angular.module('parisEasy.controllers')
                         }
                     });
                 });
+            }, function(error) {
+                setTimeout(function() {
+                    $state.go('main.home');
+                }, 1500);
             });
 
             self.drawRoad = function(travelMode) {
@@ -54,7 +57,7 @@ angular.module('parisEasy.controllers')
                         L.marker([$rootScope.userPosition.coords.latitude, $rootScope.userPosition.coords.longitude]).addTo(map_solo);
                         $ionicLoading.hide();
                         self.showTravel(travelMode);
-                    });
+                    }, function(error) {});
                 } else {
                     L.marker([$rootScope.userPosition.coords.latitude, $rootScope.userPosition.coords.longitude]).addTo(map_solo);
                     self.showTravel(travelMode);
@@ -81,42 +84,24 @@ angular.module('parisEasy.controllers')
                     }).addTo(map_solo);
                     map_solo.fitBounds(polyline.getBounds());
                     self.travelSteps = result.routes[0].legs[0].steps;
-                    $ionicScrollDelegate.scrollTop();
+                    $ionicScrollDelegate.scrollTop({
+                        shouldAnimate: true
+                    });
+                }, function(error) {
+                    $ionicLoading.show({
+                        template: 'Impossible de calculer l\itinéraire, merci de réessayer.',
+                        duration: 1000
+                    });
                 });
             }
 
-            self.shareViaEmail = function() {
-                document.addEventListener('deviceready', function() {
-                    cordova.plugins.email.isAvailable(
-                        function(isAvailable) {
-                            cordova.plugins.email.open({
-                                to: '',
-                                cc: '',
-                                bcc: [],
-                                subject: $sanitize($scope.result.nom),
-                                body: $sanitize($scope.result.small_description)
-                            });
-                        }
-                    );
-                }, false);
+            self.share = function() {
+                var title = $rootScope.trustAsHtml($scope.result.nom);
+                var description = $rootScope.trustAsHtml($scope.result.small_description);
+                var imgUrl = $scope.result.media[0].path;
+                window.plugins.socialsharing.share(title, null, imgUrl, null);
             }
 
-            self.shareViaSms = function() {
-                var options = {
-                    replaceLineBreaks: false, // true to replace \n by a new line, false by default
-                    android: {
-                        intent: 'INTENT' // send SMS with the native android SMS messaging
-                    }
-                };
-                function success() {
-                  
-                }
-              
-                function error() {
-
-                }
-                sms.send('', $sanitize($scope.result.small_description), options, success, error);
-            }
 
 
         }

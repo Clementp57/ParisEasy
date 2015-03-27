@@ -2,7 +2,7 @@
 #map_solo,
 #mapHome,
 #mapActivities,
-#mapEquipments{
+#mapEquipments {
     height: 300px;
     width: 100%;
 }
@@ -49,6 +49,11 @@ ul.ig li img {
 .solo .item {
     white-space: normal;
 }
+ul.travelModes {
+    position: absolute;
+    top: 100px;
+    left: 10px;
+}
 p.fee {
 	background: #6CBD77;
 	padding: 0px 5px;
@@ -58,4 +63,9 @@ p.fee {
 	font-size: 10px;
 	float: left;
   margin-bottom:6px;
+}
+ul.socialShare {
+    position: absolute;
+    top:220px;
+    right: 10px;  
 }

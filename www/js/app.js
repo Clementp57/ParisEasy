@@ -29,7 +29,11 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         $ionicLoading.hide()
     });
 
-    $rootScope.trustAsHtml = $sce.trustAsHtml;
+    $rootScope.trustAsHtml = function(text) {
+        var e = document.createElement('div');
+        e.innerHTML = text;
+        return $sce.trustAsHtml(e.childNodes[0].nodeValue);
+    }
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -57,7 +61,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     })
-    
+
     .state('main.searchActivity', {
         url: '/searchActivity',
         views: {
@@ -77,8 +81,8 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     })
-    
-     .state('main.equipments', {
+
+    .state('main.equipments', {
         url: '/equipments',
         views: {
             'menuContent': {
@@ -107,8 +111,8 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     })
-    
-     .state('main.equipmentResult', {
+
+    .state('main.equipmentResult', {
         url: '/equipment/:id',
         views: {
             'menuContent': {
@@ -117,7 +121,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     })
-    
+
     .state('main.searchActivitiesResults', {
         url: '/searchActivitiesResults',
         views: {
@@ -127,7 +131,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     })
-    
+
     .state('main.searchEquipmentsResults', {
         url: '/searchEquipmentsResults',
         views: {
@@ -136,25 +140,15 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
                 controller: 'SearchEquipmentsResultsCtrl as ctrl'
             }
         }
-    })
-    
-    .state('main.camera', {
-        url: '/camera',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/camera.html',
-                controller: 'CameraCtrl as ctrl'
-            }
-        }
     });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('main/home');
 
-
 })
 
 .config(function($httpProvider) {
+    $httpProvider.defaults.timeout = 10000;
     $httpProvider.interceptors.push(function($rootScope) {
         return {
             request: function(config) {
@@ -167,21 +161,9 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
             }
         }
     });
-
-    $httpProvider.interceptors.push(function($q, $injector) {
-        return {
-            'responseError': function(rejection) {
-                // do something on error
-                $injector.get("$ionicLoading").show({
-                    template: "Error ... Please retry later.",
-                    duration : 2000
-                });
-                $injector.get("$state").go('main.home');
-                return $q.reject(rejection);
-            }
-        }
-    });
 });
+    
+
 
 angular.module('parisEasy.controllers', []);
 angular.module('parisEasy.services', []);

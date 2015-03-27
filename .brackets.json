@@ -1,6 +1,8 @@
 {
     "jscodehints.detectedExclusions": [
         "/Users/Clement/DEV/EM/projets/ParisEasy/www/js/controllers/ResultsCtrl.js",
-        "/Users/Clement/DEV/EM/projets/ParisEasy/www/js/controllers/SearchActivitiesResultsCtrl.js"
+        "/Users/Clement/DEV/EM/projets/ParisEasy/www/js/controllers/SearchActivitiesResultsCtrl.js",
+        "/Users/Clement/DEV/EM/projets/ParisEasy/www/js/controllers/ActivityResultCtrl.js",
+        "/Users/Clement/DEV/EM/projets/ParisEasy/www/js/services.js"
     ]
 }

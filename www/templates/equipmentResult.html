@@ -16,7 +16,7 @@
             Photos instagram à proximité du lieu
         </div>
         <ul class="ig">
-            <li ng-repeat="ig in pics">
+            <li collection-repeat="ig in pics">
                 <img ng-src="{{ ig.images.low_resolution.url }}">
             </li>
         </ul>
