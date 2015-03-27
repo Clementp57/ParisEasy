@@ -30,10 +30,15 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
     });
 
     $rootScope.trustAsHtml = function(text) {
-        var e = document.createElement('div');
-        e.innerHTML = text;
-        return $sce.trustAsHtml(e.childNodes[0].nodeValue);
+        try {
+            var e = document.createElement('div');
+            e.innerHTML = text;
+            return $sce.trustAsHtml(e.childNodes[0].nodeValue);
+        } catch (error) {
+            return '';
+        }
     }
+
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -162,7 +167,7 @@ angular.module('parisEasy', ['ionic', 'parisEasy.controllers', 'parisEasy.servic
         }
     });
 });
-    
+
 
 
 angular.module('parisEasy.controllers', []);

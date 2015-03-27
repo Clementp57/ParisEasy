@@ -6,9 +6,14 @@ angular.module('parisEasy.controllers')
             ParisApiService.getCategories().then(function(response) {
                 self.categories = response.data;
             }, function(error) {
-                setTimeout(function() {
-                    $state.go('main.home');
-                }, 1500);
+                ParisApiService.getCategories().then(function(response) {
+                    self.categories = response.data;
+                }, function(error) {
+                    setTimeout(function() {
+                        $state.go('main.home');
+                    }, 1500);
+                });
+
             });
 
         }

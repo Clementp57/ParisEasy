@@ -23,7 +23,7 @@
 
         <div class="list">
             <a ui-sref="main.activityResult({id: res.idactivites })" ng-repeat="res in ctrl.results | filter:resultsFilter" class="item item-thumbnail-left">
-            <img ng-if="res.files.length > 0" ng-src="{{ url + res.files[0].file }}">
+            <img ng-show="res.files.length > 0" ng-src="{{res.files[0].path.indexOf('http') > -1 ? '' : 'http://filer.paris.fr/}} res.files[0].path">
             <h2 ng-bind-html="res.nom"></h2>
             <p ng-bind-html="res.lieu"></p>
             <ul class="tags_alt">
