@@ -1,5 +1,5 @@
 angular.module('parisEasy.controllers')
-    .controller('ActivityResultCtrl', ['$state', '$sanitize', '$ionicScrollDelegate', '$rootScope', '$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', 'GeoLocationService', '$ionicLoading',
+    .controller('ActivityResultCtrl', ['$state', '$sanitize', '$ionicScrollDelegate', '$rootScope', '$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', 'GeoLocationService', '$ionicLoading', 
         function($state, $sanitize, $ionicScrollDelegate, $rootScope, $scope, ParisApiService, $stateParams, $interval, InstagramService, GeoLocationService, $ionicLoading) {
             var self = this;
             $scope.result = null;
