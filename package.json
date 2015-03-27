@@ -17,6 +17,7 @@
   "cordovaPlugins": [
     "org.apache.cordova.network-information",
     "org.apache.cordova.geolocation",
-    "nl.x-services.plugins.socialsharing"
+    "nl.x-services.plugins.socialsharing",
+    "org.apache.cordova.console"
   ]
 }

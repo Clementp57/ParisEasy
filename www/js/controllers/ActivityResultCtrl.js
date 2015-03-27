@@ -1,6 +1,6 @@
 angular.module('parisEasy.controllers')
-    .controller('ActivityResultCtrl', ['$state', '$sanitize', '$ionicScrollDelegate', '$rootScope', '$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', 'GeoLocationService', '$ionicLoading',
-        function($state, $sanitize, $ionicScrollDelegate, $rootScope, $scope, ParisApiService, $stateParams, $interval, InstagramService, GeoLocationService, $ionicLoading) {
+    .controller('ActivityResultCtrl', ['$state', '$sanitize', '$ionicScrollDelegate', '$rootScope', '$scope', 'ParisApiService', '$stateParams', '$interval', 'InstagramService', 'GeoLocationService', '$ionicLoading', '$ionicPopup', 
+        function($state, $sanitize, $ionicScrollDelegate, $rootScope, $scope, ParisApiService, $stateParams, $interval, InstagramService, GeoLocationService, $ionicLoading, $ionicPopup) {
             var self = this;
             $scope.result = null;
             $scope.url = "http://filer.paris.fr/";
@@ -8,7 +8,11 @@ angular.module('parisEasy.controllers')
 
             self.travelSteps = [];
 
+            $scope.index = 0;
+
             var polyline = null;
+
+            
 
             // Map
             L.mapbox.accessToken = 'pk.eyJ1IjoibXhpbWUiLCJhIjoiNWQ1cDZUcyJ9.SbzQquPm3IbTZluO90hA6A';
@@ -108,7 +112,16 @@ angular.module('parisEasy.controllers')
                 try {
                   window.plugins.socialsharing.share(title, null, imgUrl, null); 
                 } catch(error) {
-                  alert('error');
+                  console.log(error);
+                  console.log(window.plugins);
+                  console.log(window.plugins.socialsharing);
+                  window.plugins.social.available(function(avail) {
+                     if (avail) {
+                       window.plugins.social.share('This is the message you want to share', 'http://someurl.com', 'www/image/local_image.jpg');
+                     } else {
+                       console.log("error " + avail);
+                     }
+                    });
                 }
             }
 

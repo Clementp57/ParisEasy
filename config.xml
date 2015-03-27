@@ -16,4 +16,7 @@
     <feature name="SocialSharing">
         <param name="ios-package" value="SocialSharing" />
     </feature>
+    <feature name="SocialSharing">
+       <param name="ios-package" value="SocialSharing" />
+   </feature>
 </widget>
